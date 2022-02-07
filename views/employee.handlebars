@@ -1,0 +1,89 @@
+<h1>Databar Employees</h1>
+
+<!-- Order By -->
+
+<form action="">
+  <label for="sort_by">Sort By:</label>
+  <select name="sort_by" id="sort_by">
+    <option value="first_name">First Name</option>
+    <option value="last_name">Last Name</option>
+    <option value="job_code">Job Title</option>
+  </select>
+  <input type="submit" value="Submit">
+</form>
+<br>
+
+<!-- Employee Table  -->
+
+<table>
+    <thead style="border: 1px solid black">
+        <tr>
+            <th style="border: 1px solid black">First Name</th>
+            <th style="border: 1px solid black">Last Name</th>
+            <th style="border: 1px solid black">Telephone</th>
+            <th style="border: 1px solid black">Start Date</th>
+            <th style="border: 1px solid black">Job Title</th>
+        </tr>
+    </thead>
+    <tr>
+        <td style="border: 1px solid black"><div contenteditable>John</div></td>
+        <td style="border: 1px solid black"><div contenteditable>Smith</div></td>
+        <td style="border: 1px solid black"><div contenteditable>213-231-1321</div></td>
+        <td style="border: 1px solid black"><div contenteditable>01/01/2021</div></td>
+        <td style="border: 1px solid black"><div contenteditable>Barback</div></td>
+        <td><button>Delete</button></td>
+        <td><button>Update</button></td>
+    </tr>
+     <tr>
+        <td style="border: 1px solid black"><div contenteditable>Sally</div></td>
+        <td style="border: 1px solid black"><div contenteditable>Williams</div></td>
+        <td style="border: 1px solid black"><div contenteditable>999-999-9999</div></td>
+        <td style="border: 1px solid black"><div contenteditable>01/01/2021</div></td>
+        <td style="border: 1px solid black"><div contenteditable>Bartender</div></td>
+        <td><button>Delete</button></td>
+        <td><button>Update</button></td>
+    </tr>
+     <tr>
+        <td style="border: 1px solid black"><div contenteditable>John</div></td>
+        <td style="border: 1px solid black"><div contenteditable>Rodriguez</div></td>
+        <td style="border: 1px solid black"><div contenteditable>324-333-3333</div></td>
+        <td style="border: 1px solid black"><div contenteditable>04/01/2021</div></td>
+        <td style="border: 1px solid black"><div contenteditable>Security</div></td>
+        <td><button>Delete</button></td>
+        <td><button>Update</button></td>
+    </tr>
+
+    <tbody id="header">
+
+    </tbody>
+
+
+</table>
+
+<br>
+
+<p>Add an employee to the database</p>
+
+<!-- Employee Form  -->
+
+<form id="employees">
+    First Name:
+    <input id="first_name" type="text" name="text"><br>
+    Last Name:
+    <input id="last_name" type="text" name="text"><br>
+    Telephone:
+    <input id="telephone" type="text" name="text"><br>
+    Start Date:
+    <input type="date" name="datevalue" id="start_date"><br>
+    Job:
+    <select id="job_code" name="job_code">
+        <option value="bartender">Bartender</option>
+        <option value="barback">Barback</option>
+        <option value="security">Security</option>
+        <option value="manager">Manager</option></select><br>
+    <input type="submit" value="Submit">    
+</form>
+<br>
+
+
+
