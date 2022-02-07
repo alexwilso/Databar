@@ -2,7 +2,7 @@
 CS 340 Group Project
 
 
-To run:
-cd into directory
-run command: npm install
+To run: <br />
+cd into directory <br />
+run command: npm install <br />
 run command: node index.js [port #]
