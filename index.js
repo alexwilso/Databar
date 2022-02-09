@@ -35,6 +35,24 @@ app.get("/jobs", (req, res, next) => {
 	res.render("jobs", context);
 	});
 
+// Menu Page
+app.get("/menu", (req, res, next) => {
+	var context = {};
+	res.render("menu", context);
+	});
+
+// Inventory Page
+app.get("/inventory", (req, res, next) => {
+	var context = {};
+	res.render("inventory", context);
+	});
+
+
+
+
+
+
+
 // 404 not found
 app.use((req,res) => { 
 	res.status(404);
