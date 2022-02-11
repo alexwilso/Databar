@@ -11,6 +11,9 @@ app.set("view engine", "handlebars");
 app.set('port', process.argv[2]);
 app.use(express.static("public"));
 
+// Imports images
+app.use(express.static('content'));
+
 // Home Page
 app.get("/", (req, res, next) => {
     var context = {};
@@ -19,8 +22,8 @@ app.get("/", (req, res, next) => {
 
 // Employees Page
 app.get("/employees", (req, res, next) => {
-var context = {};
-res.render("employee", context);
+	var context = {};
+	res.render("employee", context);
 });
 
 // Events Page
@@ -46,12 +49,6 @@ app.get("/inventory", (req, res, next) => {
 	var context = {};
 	res.render("inventory", context);
 	});
-
-
-
-
-
-
 
 // 404 not found
 app.use((req,res) => { 
