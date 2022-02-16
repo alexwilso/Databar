@@ -1,0 +1,9 @@
+img{
+    height: 400px;
+    width: 400px;
+    border-radius: 8px;
+}
+
+fieldset {
+    width: 50%;
+}

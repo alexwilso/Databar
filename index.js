@@ -12,7 +12,7 @@ app.set('port', process.argv[2]);
 app.use(express.static("public"));
 
 // Imports images
-app.use(express.static('content'));
+app.use(express.static('public'));
 
 // Home Page
 app.get("/", (req, res, next) => {
