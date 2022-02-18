@@ -1,30 +1,27 @@
-body {
-    background-image: url("images/db_logoBlack.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: bottom;
-    opacity: 0.9;
-    background-color: lightgray;
- }
-
 h1 {
     margin-top: 4%;
     font-size: 4vw;
-    color: white;
+    font-family: "good-times", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
     outline: 1px;
-    outline-color: black;
-        
 }
 
 #title {
     margin-top: 4%;
     font-size: 8vw;
-    color: white;
+    font-family: "good-times", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: black;
     outline: 1px;
-    outline-color: black;
-        
 }
 
+#logo {
+    border: 0;
+}
+ 
 h2 {
     text-decoration: none;
     color: black;
