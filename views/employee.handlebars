@@ -39,40 +39,25 @@
             <th style="border: 1px solid black">Job Title</th>
         </tr>
     </thead>
+    {{#each results}}
     <tr>
-        <td style="border: 1px solid black"><div contenteditable>John</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Smith</div></td>
-        <td style="border: 1px solid black"><div contenteditable>213-231-1321</div></td>
-        <td style="border: 1px solid black"><div contenteditable>01/01/2021</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Barback</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.first_name}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.last_name}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.telephone:}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.start_date}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.job_code}}</div></td>
         <td><button>Delete</button></td>
         <td><button>Update</button></td>
     </tr>
-     <tr>
-        <td style="border: 1px solid black"><div contenteditable>Sally</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Williams</div></td>
-        <td style="border: 1px solid black"><div contenteditable>999-999-9999</div></td>
-        <td style="border: 1px solid black"><div contenteditable>01/01/2021</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Bartender</div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-     <tr>
-        <td style="border: 1px solid black"><div contenteditable>John</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Rodriguez</div></td>
-        <td style="border: 1px solid black"><div contenteditable>324-333-3333</div></td>
-        <td style="border: 1px solid black"><div contenteditable>04/01/2021</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Security</div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
+    {{/each}}
+    
 
     <tbody id="header">
 
     </tbody>
-
-
 </table>
+<br>
+
 
 <br>
 

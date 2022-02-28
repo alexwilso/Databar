@@ -36,25 +36,14 @@
             <th style="border: 1px solid black">Hourly Rate</th>
         </tr>
     </thead>
-    <tr>
-        <td style="border: 1px solid black"><div contenteditable>Bartender</div></td>
-        <td style="border: 1px solid black"><div contenteditable>35.00</div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-     <tr>
-        <td style="border: 1px solid black"><div contenteditable>Security</div></td>
-        <td style="border: 1px solid black"><div contenteditable>25.00</div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-     <tr>
-       <td style="border: 1px solid black"><div contenteditable>Barback</div></td>
-        <td style="border: 1px solid black"><div contenteditable>20.00</div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-
+        {{#each results}}
+            <tr>
+            <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
+            <td style="border: 1px solid black"><div contenteditable>{{this.hourly_rate}}</div></td>
+            <td><button>Delete</button></td>
+            <td><button>Update</button></td>
+            </tr>
+        {{/each}}
     <tbody id="header">
 
     </tbody>

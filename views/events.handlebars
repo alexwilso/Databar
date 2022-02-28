@@ -41,45 +41,21 @@
             <th style="border: 1px solid black">Drink Special</th>
         </tr>
     </thead>
-    <tr>
-        <td style="border: 1px solid black"><div contenteditable>Fantasy Football Draft</div></td> <!-- Event -->
-        <td style="border: 1px solid black"><div contenteditable>08/10/2020</div></td> <!-- Event Date -->
-        <td style="border: 1px solid black"><div contenteditable>John Smith</div></td> <!-- Employee 1 -->
-        <td style="border: 1px solid black"><div contenteditable>Sally Williams</div></td> <!-- Employee 2 -->
-        <td style="border: 1px solid black"><div contenteditable>John Rodriguez</div></td> <!-- Employee 3 -->
-        <td style="border: 1px solid black"><div contenteditable>NA</div></td> <!-- Employee 4 -->
-        <td style="border: 1px solid black"><div contenteditable>NA</div></td> <!-- Employee 5--> 
-        <td style="border: 1px solid black"><div contenteditable>20</div></td> <!-- Guest Count -->
-        <td style="border: 1px solid black"><div contenteditable>Old Fashioned</div></td> <!-- Drink Special -->
+        {{#each results}}
+        <tr>
+        <td style="border: 1px solid black"><div contenteditable>{{this.event_name}}</div></td> <!-- Event -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.event_date}}</div></td> <!-- Event Date -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.employee_1}}</div></td> <!-- Employee 1 -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.employee_2}}</div></td> <!-- Employee 2 -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.employee_3}}</div></td> <!-- Employee 3 -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.employee_4}}</div></td> <!-- Employee 4 -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.employee_5}}</div></td> <!-- Employee 5--> 
+        <td style="border: 1px solid black"><div contenteditable>{{this.guest_count}}</div></td> <!-- Guest Count -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.menu_item}}</div></td> <!-- Drink Special -->
         <td><button>Delete</button></td>
         <td><button>Update</button></td>
-    </tr>
-     <tr>
-        <td style="border: 1px solid black"><div contenteditable>Target Staff Meeting</div></td> <!-- Event -->
-        <td style="border: 1px solid black"><div contenteditable>08/10/2020</div></td> <!-- Event Date -->
-        <td style="border: 1px solid black"><div contenteditable>John Smith</div></td> <!-- Employee 1 -->
-        <td style="border: 1px solid black"><div contenteditable>Sally Williams</div></td> <!-- Employee 2 -->
-        <td style="border: 1px solid black"><div contenteditable>John Rodriguez</div></td> <!-- Employee 3 -->
-        <td style="border: 1px solid black"><div contenteditable>NA</div></td> <!-- Employee 4 -->
-        <td style="border: 1px solid black"><div contenteditable>NA</div></td> <!-- Employee 5--> 
-        <td style="border: 1px solid black"><div contenteditable>100</div></td> <!-- Guest Count -->
-        <td style="border: 1px solid black"><div contenteditable>Moscow Mule</div></td> <!-- Drink Special -->
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-     <tr>
-        <td style="border: 1px solid black"><div contenteditable>Town Hall</div></td> <!-- Event -->
-        <td style="border: 1px solid black"><div contenteditable>08/10/2020</div></td> <!-- Event Date -->
-        <td style="border: 1px solid black"><div contenteditable>John Smith</div></td> <!-- Employee 1 -->
-        <td style="border: 1px solid black"><div contenteditable>Sally Williams</div></td> <!-- Employee 2 -->
-        <td style="border: 1px solid black"><div contenteditable>John Rodriguez</div></td> <!-- Employee 3 -->
-        <td style="border: 1px solid black"><div contenteditable>NA</div></td> <!-- Employee 4 -->
-        <td style="border: 1px solid black"><div contenteditable>NA</div></td> <!-- Employee 5--> 
-        <td style="border: 1px solid black"><div contenteditable>500</div></td> <!-- Guest Count -->
-        <td style="border: 1px solid black"><div contenteditable>Whiskey Sour</div></td> <!-- Drink Special -->
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
+        </tr>
+        {{/each}}
 
     <tbody id="header">
 
