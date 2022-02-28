@@ -25,76 +25,74 @@ app.get("/", (req, res, next) => {
 // Employees Page
 app.get("/employees", (req, res, next) => {
 	let selectEmployees = 'SELECT * FROM Employees';
+	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectEmployees, function(err, rows, fields) {
 		if (err) {
 			console.log(err);
 		} else {
-			
+			console.log('Successful employees select');
+			res.render("employee", {results: rows});
 		};
-
 	});
 
-	let context = {};
-	res.render("employee", context);
+	
 });
 
 // Events Page
 app.get("/events", (req, res, next) => {
 	let selectEvents = 'SELECT * FROM Events';
+	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectEvents, function(err, rows, fields) {
 		if (err) {
 			console.log(err);
 		} else {
-			
+			console.log('Successful events select');
+			res.render("events", {results: rows});
 		};
 	});
-
-	let context = {};
-	res.render("events", context);
 	});
 
 // Jobs Page
 app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
+	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectJobs, function(err, rows, fields) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('Successful');
-			
+			console.log('Successful jobs select');
+			res.render("jobs", {results: rows});
 		};
 	});
-	let context = {};
-	res.render("jobs", context);
 	});
 
 // Menu Page
 app.get("/menu", (req, res, next) => {
 	let selectMenu = 'SELECT * FROM Drinks';
+	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectMenu, function(err, rows, fields) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('Successful');
+			console.log('Successful drinks select');
+			console.log(rows);
+			res.render("menu", {results: rows});
 		};
 	});
-
-	let context = {};
-	res.render("menu", context);
 	});
 
 // Inventory Page
 app.get("/inventory", (req, res, next) => {
 	let selectInventory = 'SELECT * FROM Inventory';
+	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectInventory, function(err, rows, fields){
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('Successful');
+			console.log('Successful inventory select');
+			res.render("inventory", {results: rows});
 		};
 	});
-	let context = {};
-	res.render("inventory", context);
 	});
 
 // 404 not found

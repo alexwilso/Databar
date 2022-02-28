@@ -46,66 +46,20 @@
             <th style="border: 1px solid black">Price</th>
         </tr>
     </thead>
+    {{#each results}}
     <tr>
-        <td style="border: 1px solid black"><div contenteditable>01</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Old Fashioned</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Bulleit Bourbon</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Angostura Bitters</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Luxardo Cherry</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Orange Slice</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Sugar Cube</div></td>
-        <td style="border: 1px solid black"><div contenteditable>$12.00 </div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.menu_item}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.drink_name}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.ingredient_1}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.ingredient_2}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.ingredient_3}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.ingredient_4}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.ingredient_5}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.price}}</div></td>
         <td><button>Delete</button></td>
         <td><button>Update</button></td>
     </tr>
-     <tr>
-        <td style="border: 1px solid black"><div contenteditable>02</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Manhattan</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Bulleit Rye</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Sweet Vermouth</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Amaro</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Angostura Bitters</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Luxardo Cherry</div></td>
-        <td style="border: 1px solid black"><div contenteditable>$12.00 </div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-     <tr>
-       <td style="border: 1px solid black"><div contenteditable>03</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Whiskey Sour</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Bulleit Bourbon</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Egg White</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Lemon Juice</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Simple Syrup</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Peychaulds Bitters</div></td>
-        <td style="border: 1px solid black"><div contenteditable>$10.00 </div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-    <tr>
-       <td style="border: 1px solid black"><div contenteditable>04</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Moscow Mule</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Russian Standard</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Ginger Beer</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Lime Juice</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Mint Sprig</div></td>
-        <td style="border: 1px solid black"><div contenteditable>N/A</div></td>
-        <td style="border: 1px solid black"><div contenteditable>$10.00 </div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
-    <tr>
-       <td style="border: 1px solid black"><div contenteditable>05</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Cadillac Margarita</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Casamigos Reposado</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Triple Sec</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Sweet & Sour</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Gran Marnier</div></td>
-        <td style="border: 1px solid black"><div contenteditable>Lime Wedge</div></td>
-        <td style="border: 1px solid black"><div contenteditable>$12.00 </div></td>
-        <td><button>Delete</button></td>
-        <td><button>Update</button></td>
-    </tr>
+    {{/each}}
     
     <tbody id="header">
 
