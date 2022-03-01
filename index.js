@@ -1,6 +1,29 @@
+// Creates table and populates with sample data
+require('./database/import.js');
+
 let express = require("express");
 let app = express();
-let handlebars = require("express-handlebars").create({defaultLayout:"main"});
+let handlebars = require("express-handlebars").create({
+	defaultLayout:"main",
+	helpers: { // Helper functions for handlebars file
+		// Called if value is undefined, replaces with null 
+		isNull: function(value){
+			if (value == undefined) {
+				return 'NULL';
+			} else {
+				return value;
+			};
+		},
+		// Called in inventory.handlebars. Adds $ if value.
+		isNullInventory: function(value){
+			if (value == undefined) {
+				return 'NULL';
+			} else {
+				return `$${value}`;
+			};
+		},
+	}
+});
 let bodyParser = require("body-parser");
 let mysql = require("./database/dbcon.js");
 const e = require("express");
@@ -13,8 +36,6 @@ app.set("view engine", "handlebars");
 app.set('port', process.argv[2]);
 app.use(express.static("public"));
 
-// Creates table and populates with sample data
-require('./database/import.js');
 
 
 // Imports images
@@ -138,6 +159,7 @@ app.get("/inventory", (req, res, next) => {
 			console.log(err);
 		} else {
 			console.log('Successful inventory select');
+			console.log(rows);
 			res.render("inventory", {results: rows});
 		};
 	});
