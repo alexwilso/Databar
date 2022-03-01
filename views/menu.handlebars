@@ -75,16 +75,47 @@
 <form id="drinks">
     Drink Name:
     <input id="drink_name" type="text" name="text"><br>
+
     Ingredient 1:
-    <input id="ingredient_1" type="text" name="text"><br>
+    <!-- Loops through inventory object passed from index.js  -->
+    <select id="product_ID" name="name">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
     Ingredient 2:
-    <input id="ingredient_2" type="text" name="text"><br>
+    <!-- Loops through inventory object passed from index.js  -->
+    <select id="product_ID" name="name">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
     Ingredient 3:
-    <input id="ingredient_3" type="text" name="text"><br>
+     <!-- Loops through inventory object passed from index.js  -->
+    <select id="product_ID" name="name">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
     Ingredient 4:
-    <input id="ingredient_4" type="text" name="text"><br>
+     <!-- Loops through inventory object passed from index.js  -->
+    <select id="product_ID" name="name">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
     Ingredient 5:
-    <input id="ingredient_5" type="text" name="text"><br>
+    <!-- Loops through inventory object passed from index.js  -->
+    <select id="product_ID" name="name">
+        <option value=""></option>  <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
     Price:
     <input id="price" type="decimal" name="decimal"><br>
     <input type="submit" value="Submit">    

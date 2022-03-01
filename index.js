@@ -37,14 +37,14 @@ app.get("/employees", (req, res, next) => {
 			console.log(err);
 		} else {
 			console.log('Successful employees select');
-			context["results"] = rows;
+			context["results"] = rows; // results of query
 			// Select Jobs query
 			mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
 				if (err) {
 					console.log(err);
 				} else {
 				console.log('Successful employees select');
-				context["jobs"] = jobrows;
+				context["jobs"] = jobrows; // results of query
 				// Render to employee.handlebars
 				res.render("employee", context);
 				};
@@ -58,7 +58,6 @@ app.get("/events", (req, res, next) => {
 	let selectEvents = 'SELECT Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
 	let selectDrinks = 'SELECT * FROM Drinks';
 	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees'
-	// Adds query to datatbase. Sends data to render file
 	let context = {}
 	// Select Events
 	mysql.pool.query(selectEvents, (err, rows, fields) => {
@@ -66,21 +65,22 @@ app.get("/events", (req, res, next) => {
 			console.log(err);
 		} else {
 			console.log('Successful events select');
-			context['results'] = rows;
+			context['results'] = rows; // results of query
 			// Select Drinks
 			mysql.pool.query(selectDrinks, (err, drinkrows) => {
 				if (err) {
 					console.log(err);
 				} else {
+				console.log('successful drink query');
 				context['drinks'] = drinkrows;
 				// Select Employees
 				mysql.pool.query(selctEmployees, (err, empRows) => {
 					if (err) {
 						console.log(err);
 					} else {
-						context['employees'] = empRows;
-						console.log(context.employees);
-						res.render("events", context);	
+						console.log('successful employees query')
+						context['employees'] = empRows; // results of query
+						res.render("events", context); // Renders handlebar file and context Obj	
 							};
 						});
 					};
@@ -98,7 +98,7 @@ app.get("/jobs", (req, res, next) => {
 			console.log(err);
 		} else {
 			console.log('Successful jobs select');
-			res.render("jobs", {results: rows});
+			res.render("jobs", {results: rows}); // Renders handlebar file and context Obj
 		};
 	});
 	});
@@ -106,17 +106,28 @@ app.get("/jobs", (req, res, next) => {
 // Menu Page
 app.get("/menu", (req, res, next) => {
 	let selectMenu = 'SELECT * FROM Drinks';
-	// Adds query to datatbase. Sends data to render file
+	let selectinventory = 'Select Inventory.product_ID, Inventory.name FROM Inventory';
+	// Select menu
+	let context = {};
 	mysql.pool.query(selectMenu, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful drinks select');
-			console.log(rows);
-			res.render("menu", {results: rows});
+			context['results'] = rows; // Restults of query
+			// Select Inventory
+			mysql.pool.query(selectinventory, (err, inventoryRows) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log('successful inventory query');
+					context['inventory'] = inventoryRows; // results of query
+					res.render("menu", context); // Renders handlebar file and context Obj
+				};
+			});
 		};
 	});
-	});
+});
 
 // Inventory Page
 app.get("/inventory", (req, res, next) => {
@@ -149,19 +160,3 @@ app.use((err,  req,  res,  next) => {
 app.listen(app.get('port'), () => {
 	console.log(`Server is listening on http://${process.env.HOSTNAME}:${app.get('port')}; press Ctrl-C to terminte` ); 
 });
-
-// SELECT 
-// Events.event_name, 
-// Events.event_date, 
-// Events.employee_1, 
-// Events.employee_2, 
-// Events.employee_3, 
-// Events.employee_4, 
-// Events.employee_5, 
-// Events.guest_count,
-// Drinks.drink_name AS drink_special
-// FROM Events
-// LEFT JOIN Drinks ON
-// Events.menu_item = Drinks.menu_item
-// LEFT JOIN Employees ON
-// Events.employee_1 = Employees.employee_ID;
