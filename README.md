@@ -8,5 +8,5 @@ run command: npm install <br />
 run command: node index.js [port #] <br><br>
 
 On flip server, navigate to... <br>
-Flip url: http://flip1.engr.oregonstate.edu:4214/
+Flip url: http://flip2.engr.oregonstate.edu:2414/
 
