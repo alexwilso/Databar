@@ -13,5 +13,8 @@
     "express-handlebars": "^6.0.2",
     "forever": "^4.0.3",
     "mysql": "2.18.1"
+  },
+  "devDependencies": {
+    "mysql-import": "^5.0.21"
   }
 }

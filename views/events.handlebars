@@ -41,6 +41,7 @@
             <th style="border: 1px solid black">Drink Special</th>
         </tr>
     </thead>
+        <!-- Loops through employees object passed from index.js  -->
         {{#each results}}
         <tr>
         <td style="border: 1px solid black"><div contenteditable>{{this.event_name}}</div></td> <!-- Event -->
@@ -51,7 +52,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{this.employee_4}}</div></td> <!-- Employee 4 -->
         <td style="border: 1px solid black"><div contenteditable>{{this.employee_5}}</div></td> <!-- Employee 5--> 
         <td style="border: 1px solid black"><div contenteditable>{{this.guest_count}}</div></td> <!-- Guest Count -->
-        <td style="border: 1px solid black"><div contenteditable>{{this.menu_item}}</div></td> <!-- Drink Special -->
+        <td style="border: 1px solid black"><div contenteditable>{{this.drink_special}}</div></td> <!-- Drink Special -->
         <td><button>Delete</button></td>
         <td><button>Update</button></td>
         </tr>
@@ -73,21 +74,53 @@
     <input id="event_name" type="text" name="text"><br>
     Event Date:
     <input type="date" name="event_date" id="event_date"><br>
+    <!-- Loops through Employees object passed from index.js  -->
     Employee:
-    <input id="telephone" type="text" name="text"><br>
+        <select id="employee_ID" name="employee_1">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each employees}}
+        <option value={{this.employee_ID}}>{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}</select><br>
+    <!-- Loops through Employees object passed from index.js  -->
     Employee:
-    <input id="telephone" type="text" name="text"><br>
+        <select id="employee_ID" name="employee_2">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each employees}}
+        <option value={{this.employee_ID}}>{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}</select><br>
+    <!-- Loops through Employees object passed from index.js  -->
     Employee:
-    <input id="telephone" type="text" name="text"><br>
+        <select id="employee_ID" name="employee_3">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each employees}}
+        <option value={{this.employee_ID}}>{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}</select><br>
+    <!-- Loops through Employees object passed from index.js  -->
     Employee:
-    <input id="telephone" type="text" name="text"><br>
+        <select id="employee_ID" name="employee_4">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each employees}}
+        <option value={{this.employee_ID}}>{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}</select><br>
+      <!-- Loops through Employees object passed from index.js  -->
     Employee:
-    <input id="telephone" type="text" name="text"><br>
+        <select id="employee_ID" name="employee_5">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each employees}}
+        <option value={{this.employee_ID}}>{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}</select><br>
+
     Guest Count:
     <input id="guest_count" type="integer"><br>
+
     Drink Speial:
-    <input id="'drink_name" type="text"><br> 
-     <input type="submit" value="Submit">   
+    <!-- Loops through drinks object passed from index.js  -->
+    <select id="drink_name" name="menu_id">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each drinks}}
+        <option value={{this.menu_item}}>{{this.drink_name}}</option>
+        {{/each}}</select><br>
+    <input type="submit" value="Submit">    
 </form>
 </fieldset>
 

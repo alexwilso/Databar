@@ -39,13 +39,14 @@
             <th style="border: 1px solid black">Job Title</th>
         </tr>
     </thead>
+    <!-- Loops through results object passed from index.js  -->
     {{#each results}}
     <tr>
         <td style="border: 1px solid black"><div contenteditable>{{this.first_name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.last_name}}</div></td>
-        <td style="border: 1px solid black"><div contenteditable>{{this.telephone:}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.telephone}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.start_date}}</div></td>
-        <td style="border: 1px solid black"><div contenteditable>{{this.job_code}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
         <td><button>Delete</button></td>
         <td><button>Update</button></td>
     </tr>
@@ -74,11 +75,11 @@
     Start Date:
     <input type="date" name="datevalue" id="start_date"><br>
     Job:
+    <!-- Loops through jobs object passed from index.js  -->
     <select id="job_code" name="job_code">
-        <option value="bartender">Bartender</option>
-        <option value="barback">Barback</option>
-        <option value="security">Security</option>
-        <option value="manager">Manager</option></select><br>
+        {{#each jobs}}
+        <option value={{this.job_code}}>{{this.job_title}}</option>
+        {{/each}}</select><br>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>

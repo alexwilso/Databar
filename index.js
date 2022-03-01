@@ -1,8 +1,9 @@
-var express = require("express");
-var app = express();
-var handlebars = require("express-handlebars").create({defaultLayout:"main"});
-var bodyParser = require("body-parser");
-var mysql = require("./dbcon.js");
+let express = require("express");
+let app = express();
+let handlebars = require("express-handlebars").create({defaultLayout:"main"});
+let bodyParser = require("body-parser");
+let mysql = require("./database/dbcon.js");
+const e = require("express");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -11,6 +12,9 @@ app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set('port', process.argv[2]);
 app.use(express.static("public"));
+
+// Creates table and populates with sample data
+require('./database/import.js');
 
 
 // Imports images
@@ -24,44 +28,77 @@ app.get("/", (req, res, next) => {
 
 // Employees Page
 app.get("/employees", (req, res, next) => {
-	let selectEmployees = 'SELECT * FROM Employees';
-	// Adds query to datatbase. Sends data to render file
-	mysql.pool.query(selectEmployees, function(err, rows, fields) {
+	let selectEmployees = 'SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code';
+	let jobValues = 'SELECT * FROM Jobs';
+	let context = {};
+	// Select employees query
+	mysql.pool.query(selectEmployees, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful employees select');
-			res.render("employee", {results: rows});
+			context["results"] = rows; // results of query
+			// Select Jobs query
+			mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
+				if (err) {
+					console.log(err);
+				} else {
+				console.log('Successful employees select');
+				context["jobs"] = jobrows; // results of query
+				// Render to employee.handlebars
+				res.render("employee", context);
+				};
+			});
 		};
 	});
-
-	
 });
 
 // Events Page
 app.get("/events", (req, res, next) => {
-	let selectEvents = 'SELECT * FROM Events';
-	// Adds query to datatbase. Sends data to render file
-	mysql.pool.query(selectEvents, function(err, rows, fields) {
+	let selectEvents = 'SELECT Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
+	let selectDrinks = 'SELECT * FROM Drinks';
+	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees'
+	let context = {}
+	// Select Events
+	mysql.pool.query(selectEvents, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful events select');
-			res.render("events", {results: rows});
-		};
-	});
+			context['results'] = rows; // results of query
+			// Select Drinks
+			mysql.pool.query(selectDrinks, (err, drinkrows) => {
+				if (err) {
+					console.log(err);
+				} else {
+				console.log('successful drink query');
+				context['drinks'] = drinkrows;
+				// Select Employees
+				mysql.pool.query(selctEmployees, (err, empRows) => {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log('successful employees query')
+						context['employees'] = empRows; // results of query
+						res.render("events", context); // Renders handlebar file and context Obj	
+							};
+						});
+					};
+				});
+			};
+		});
 	});
 
 // Jobs Page
 app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
 	// Adds query to datatbase. Sends data to render file
-	mysql.pool.query(selectJobs, function(err, rows, fields) {
+	mysql.pool.query(selectJobs, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful jobs select');
-			res.render("jobs", {results: rows});
+			res.render("jobs", {results: rows}); // Renders handlebar file and context Obj
 		};
 	});
 	});
@@ -69,23 +106,34 @@ app.get("/jobs", (req, res, next) => {
 // Menu Page
 app.get("/menu", (req, res, next) => {
 	let selectMenu = 'SELECT * FROM Drinks';
-	// Adds query to datatbase. Sends data to render file
-	mysql.pool.query(selectMenu, function(err, rows, fields) {
+	let selectinventory = 'Select Inventory.product_ID, Inventory.name FROM Inventory';
+	// Select menu
+	let context = {};
+	mysql.pool.query(selectMenu, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful drinks select');
-			console.log(rows);
-			res.render("menu", {results: rows});
+			context['results'] = rows; // Restults of query
+			// Select Inventory
+			mysql.pool.query(selectinventory, (err, inventoryRows) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log('successful inventory query');
+					context['inventory'] = inventoryRows; // results of query
+					res.render("menu", context); // Renders handlebar file and context Obj
+				};
+			});
 		};
 	});
-	});
+});
 
 // Inventory Page
 app.get("/inventory", (req, res, next) => {
 	let selectInventory = 'SELECT * FROM Inventory';
 	// Adds query to datatbase. Sends data to render file
-	mysql.pool.query(selectInventory, function(err, rows, fields){
+	mysql.pool.query(selectInventory, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
