@@ -26,7 +26,6 @@ let handlebars = require("express-handlebars").create({
 });
 let bodyParser = require("body-parser");
 let mysql = require("./database/dbcon.js");
-const e = require("express");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
