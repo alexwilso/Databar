@@ -26,6 +26,7 @@ let handlebars = require("express-handlebars").create({
 });
 let bodyParser = require("body-parser");
 let mysql = require("./database/dbcon.js");
+let router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -70,6 +71,20 @@ app.get("/employees", (req, res, next) => {
 				};
 			});
 		};
+	});
+});
+router.post('/employees', (req, res) => {
+	var mysql = req.app.get('mysql');
+	var sql = "INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)";
+	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error){
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Employee added');
+			res.redirect('/employees');
+		}
 	});
 });
 
