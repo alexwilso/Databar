@@ -69,9 +69,9 @@
 <!-- Events Form  -->
 <fieldset>
 <legend>Add Event</legend>
-<form id="employees">
+<form id="employees" action="/events" method="POST">
     Event Name:
-    <input id="event_name" type="text" name="text"><br>
+    <input id="event_name" type="text" name="event_name"><br>
     Event Date:
     <input type="date" name="event_date" id="event_date"><br>
     <!-- Loops through Employees object passed from index.js  -->
@@ -111,7 +111,7 @@
         {{/each}}</select><br>
 
     Guest Count:
-    <input id="guest_count" type="integer"><br>
+    <input id="guest_count" type="integer" name="guest_count"><br>
 
     Drink Speial:
     <!-- Loops through drinks object passed from index.js  -->
