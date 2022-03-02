@@ -74,8 +74,7 @@ app.get("/employees", (req, res, next) => {
 	});
 });
 // Insert Employee
-router.post('/employees', (req, res) => {
-	var mysql = req.app.get('mysql');
+app.post('/employees', (req, res) => {
 	var sql = "INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)";
 	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
@@ -126,8 +125,7 @@ app.get("/events", (req, res, next) => {
 	});
 
 //Insert Event
-router.post('/events', (req, res) => {
-	var mysql = req.app.get('mysql');
+app.post('/events', (req, res) => {
 	var sql = "INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)";
 	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
@@ -156,8 +154,8 @@ app.get("/jobs", (req, res, next) => {
 	});
 
 // Insert Job
-router.post('/jobs', (req, res) => {
-	var mysql = req.app.get('mysql');
+app.post('/jobs', (req, res) => {
+	// var mysql = req.app.get('mysql');
 	var sql = "INSERT INTO Jobs (job_title, hourly_rate) VALUES (?,?)";
 	var inserts = [req.body.job_title, req.body.hourly_rate];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
