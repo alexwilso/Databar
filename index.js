@@ -73,6 +73,7 @@ app.get("/employees", (req, res, next) => {
 		};
 	});
 });
+// Insert Employee
 router.post('/employees', (req, res) => {
 	var mysql = req.app.get('mysql');
 	var sql = "INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)";
@@ -124,6 +125,7 @@ app.get("/events", (req, res, next) => {
 		});
 	});
 
+//Insert Event
 router.post('/events', (req, res) => {
 	var mysql = req.app.get('mysql');
 	var sql = "INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -152,6 +154,22 @@ app.get("/jobs", (req, res, next) => {
 		};
 	});
 	});
+
+// Insert Job
+router.post('/jobs', (req, res) => {
+	var mysql = req.app.get('mysql');
+	var sql = "INSERT INTO Jobs (job_title, hourly_rate) VALUES (?,?)";
+	var inserts = [req.body.job_title, req.body.hourly_rate];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error){
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Job added');
+			res.redirect('/jobs');
+		}
+	});
+});
 
 // Menu Page
 app.get("/menu", (req, res, next) => {
