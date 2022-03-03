@@ -72,6 +72,7 @@ app.get("/employees", (req, res, next) => {
 		};
 	});
 });
+
 // Insert Employee
 app.post("/employees", (req, res) => {
 	var sql = 'INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)';
