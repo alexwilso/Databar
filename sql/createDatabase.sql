@@ -51,6 +51,8 @@ CREATE TABLE `Employees` (
 LOCK TABLE `Employees` WRITE;
 -- SAMPLE DATA --
 INSERT INTO `Employees` (`first_name`, `last_name`, `telephone`, `job_code`, `start_date`)
+VALUES ('N/A', '', 'N/A', 1, '9999-12-31');
+INSERT INTO `Employees` (`first_name`, `last_name`, `telephone`, `job_code`, `start_date`)
 VALUES ('John', 'Smith', '21241241', 1, '2008-11-11');
 INSERT INTO `Employees` (`first_name`, `last_name`, `telephone`, `job_code`, `start_date`)
 VALUES ('Sally', 'Jones', '241412412', 2, '2011-11-11');
@@ -75,6 +77,8 @@ CREATE TABLE `Inventory` (
 
 -- INVENTORY SAMPLE DATA --
 LOCK TABLES `Inventory` WRITE;
+INSERT INTO `Inventory` (`name`, `category`, `btl_cost`, `cse_cost`, `distributor`)
+VALUES ('N/A', 'N/A', 0.00, 00.00, 'N/A');
 INSERT INTO `Inventory` (`name`, `category`, `btl_cost`, `cse_cost`, `distributor`)
 VALUES ('Bulleit Bourbon', 'Whiskey/Bourbon', 28.00, 275.00, 'Youngs Spirits');
 INSERT INTO `Inventory` (`name`, `category`, `btl_cost`, `cse_cost`, `distributor`)

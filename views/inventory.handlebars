@@ -70,9 +70,9 @@
 <!-- Inventory Form -->
 <fieldset>
 <legend>Add Inventory Item</legend>
-<form id="inventory">
+<form id="inventory" action="/inventory" method="POST">
     Name:
-    <input id="name" type="text" name="text"><br>
+    <input id="name" type="text" name="name"><br>
     Category:
     <select name="category" id="category">
         <option value="whiskey/bourbon">Whiskey/Bourbon</option>
@@ -85,11 +85,11 @@
         <option value="misc">Misc.</option>    
     </select><br>
     Cost/Bottle:
-    <input id="bottle_cost" type="text" name="text"><br>
+    <input id="btl_cost" type="text" name="btl_cost"><br>
     Cost/Case:
-    <input id="case_cost" type="text" name="text"><br>
+    <input id="cse_cost" type="text" name="cse_cost"><br>
     Distributor:
-    <input id="distributor" type="text" name="text"><br>
+    <input id="distributor" type="text" name="distributor"><br>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>

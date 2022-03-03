@@ -72,9 +72,9 @@
 <!-- Inventory Form -->
 <fieldset>
 <legend>Add Menu Item</legend>
-<form id="drinks">
+<form id="drinks" action="/menu" method="POST">
     Drink Name:
-    <input id="drink_name" type="text" name="text"><br>
+    <input id="drink_name" type="text" name="drink_name"><br>
 
     Ingredient 1:
     <!-- Loops through inventory object passed from index.js  -->
@@ -117,7 +117,7 @@
         {{/each}}</select><br>
 
     Price:
-    <input id="price" type="decimal" name="decimal"><br>
+    <input id="price" type="decimal" name="price"><br>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
