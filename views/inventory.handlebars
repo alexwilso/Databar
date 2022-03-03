@@ -72,24 +72,24 @@
 <legend>Add Inventory Item</legend>
 <form id="inventory" action="/inventory" method="POST">
     Name:
-    <input id="name" type="text" name="name"><br>
+    <input id="name" type="text" name="name" required><br>
     Category:
     <select name="category" id="category">
-        <option value="whiskey/bourbon">Whiskey/Bourbon</option>
-        <option value="tequila/mezcal">Tequila/Mezcal</option>
-        <option value="vodka">Vodka</option>
-        <option value="rum">Rum</option>
-        <option value="beer">Beer</option>
-        <option value="wine">Wine</option>
-        <option value="mixer">Mixer</option>
-        <option value="misc">Misc.</option>    
+        <option value="Whiskey/Bourbon">Whiskey/Bourbon</option>
+        <option value="Tequila/Mezcal">Tequila/Mezcal</option>
+        <option value="Vodka">Vodka</option>
+        <option value="Rum">Rum</option>
+        <option value="Beer">Beer</option>
+        <option value="Wine">Wine</option>
+        <option value="Mixer">Mixer</option>
+        <option value="Misc">Misc.</option>    
     </select><br>
     Cost/Bottle:
     <input id="btl_cost" type="text" name="btl_cost"><br>
     Cost/Case:
     <input id="cse_cost" type="text" name="cse_cost"><br>
     Distributor:
-    <input id="distributor" type="text" name="distributor"><br>
+    <input id="distributor" type="text" name="distributor" required><br>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>

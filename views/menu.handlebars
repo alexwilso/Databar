@@ -74,19 +74,18 @@
 <legend>Add Menu Item</legend>
 <form id="drinks" action="/menu" method="POST">
     Drink Name:
-    <input id="drink_name" type="text" name="drink_name"><br>
+    <input id="drink_name" type="text" name="drink_name" required><br>
 
     Ingredient 1:
     <!-- Loops through inventory object passed from index.js  -->
-    <select id="product_ID" name="name">
-        <option value=""></option> <!-- NULL Option -->
+    <select id="ingredient_1" name="ingredient_1">
         {{#each inventory}}
         <option value={{this.product_ID}}>{{this.name}}</option>
         {{/each}}</select><br>
 
     Ingredient 2:
     <!-- Loops through inventory object passed from index.js  -->
-    <select id="product_ID" name="name">
+    <select id="ingredient_2" name="ingredient_2">
         <option value=""></option> <!-- NULL Option -->
         {{#each inventory}}
         <option value={{this.product_ID}}>{{this.name}}</option>
@@ -94,7 +93,7 @@
 
     Ingredient 3:
      <!-- Loops through inventory object passed from index.js  -->
-    <select id="product_ID" name="name">
+    <select id="ingredient_3" name="ingredient_3">
         <option value=""></option> <!-- NULL Option -->
         {{#each inventory}}
         <option value={{this.product_ID}}>{{this.name}}</option>
@@ -102,7 +101,7 @@
 
     Ingredient 4:
      <!-- Loops through inventory object passed from index.js  -->
-    <select id="product_ID" name="name">
+    <select id="ingredient_4" name="ingredient_4">
         <option value=""></option> <!-- NULL Option -->
         {{#each inventory}}
         <option value={{this.product_ID}}>{{this.name}}</option>
@@ -110,14 +109,14 @@
 
     Ingredient 5:
     <!-- Loops through inventory object passed from index.js  -->
-    <select id="product_ID" name="name">
+    <select id="ingredient_5" name="ingredient_5">
         <option value=""></option>  <!-- NULL Option -->
         {{#each inventory}}
         <option value={{this.product_ID}}>{{this.name}}</option>
         {{/each}}</select><br>
 
     Price:
-    <input id="price" type="decimal" name="price"><br>
+    <input id="price" type="decimal" name="price" required><br>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
