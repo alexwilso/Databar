@@ -129,6 +129,11 @@ app.get("/events", (req, res, next) => {
 app.post("/events", (req, res) => {
 	var sql = 'INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)';
 	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item];
+	for (let index = 2; index < 7; index++) { // Null Check
+		if (inserts[index] == "") {
+			inserts[index] = null;
+		};
+	};
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
 			res.write(JSON.stringify(error));
@@ -158,7 +163,7 @@ app.get("/jobs", (req, res, next) => {
 app.post("/jobs", (req, res) => {
 	var sql = 'INSERT INTO Jobs (job_title, hourly_rate) VALUES (?,?)';
 	var inserts = [req.body.job_title, req.body.hourly_rate];
-	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
 			res.write(JSON.stringify(error));
 			res.end();
@@ -200,7 +205,12 @@ app.post("/menu", (req, res) => {
 	// var mysql = req.app.get('mysql');
 	var sql = 'INSERT INTO Drinks (drink_name, ingredient_1, ingredient_2, ingredient_3, ingredient_4, ingredient_5, price) VALUES (?,?,?,?,?,?,?)';
 	var inserts = [req.body.drink_name, req.body.ingredient_1, req.body.ingredient_2, req.body.ingredient_3, req.body.ingredient_4, req.body.ingredient_5, req.body.price];
-	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+	for (let index = 2; index < 6; index++) { // Null Check
+		if (inserts[index] == "") {
+			inserts[index] = null;
+		};
+	};
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
 			res.write(JSON.stringify(error));
 			res.end();
@@ -220,7 +230,6 @@ app.get("/inventory", (req, res, next) => {
 			console.log(err);
 		} else {
 			console.log('Successful inventory select');
-			console.log(rows);
 			res.render("inventory", {results: rows});
 		};
 	});
@@ -230,7 +239,12 @@ app.get("/inventory", (req, res, next) => {
 app.post("/inventory", (req, res) => {
 	var sql = 'INSERT INTO Inventory (name, category, btl_cost, cse_cost, distributor) VALUES (?,?,?,?,?)';
 	var inserts = [req.body.name, req.body.category, req.body.btl_cost, req.body.cse_cost, req.body.distributor];
-	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+	for (let index = 2; index < 4; index++) { // Null Check
+		if (inserts[index] == "") {
+			inserts[index] = null;
+		};
+	};
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
 			res.write(JSON.stringify(error));
 			res.end();

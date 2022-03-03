@@ -71,9 +71,9 @@
 <legend>Add Event</legend>
 <form id="employees" action="/events" method="POST">
     Event Name:
-    <input id="event_name" type="text" name="event_name"><br>
+    <input id="event_name" type="text" name="event_name" required><br>
     Event Date:
-    <input type="text" name="event_date" id="event_date"><br>
+    <input type="date" name="event_date" id="event_date" required><br>
     <!-- Loops through Employees object passed from index.js  -->
     Employee:
         <select id="employee_1" name="employee_1">
@@ -111,7 +111,7 @@
         {{/each}}</select><br>
 
     Guest Count:
-    <input id="guest_count" type="integer" name="guest_count"><br>
+    <input id="guest_count" type="integer" name="guest_count" required><br>
 
     Drink Speial:
     <!-- Loops through drinks object passed from index.js  -->
