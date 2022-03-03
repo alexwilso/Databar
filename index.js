@@ -77,7 +77,7 @@ app.get("/employees", (req, res, next) => {
 app.post("/employees", (req, res) => {
 	var sql = 'INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)';
 	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date];
-	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
 			res.write(JSON.stringify(error));
 			res.end();
@@ -134,7 +134,7 @@ app.post("/events", (req, res) => {
 			inserts[index] = null;
 		};
 	};
-	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
 			res.write(JSON.stringify(error));
 			res.end();
