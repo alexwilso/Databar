@@ -65,15 +65,15 @@
 <!-- Employee Form  -->
 <fieldset>
 <legend>Add Employee</legend>
-<form id="employees">
+<form id="employees" action="/employees" method="post">
     First Name:
-    <input id="first_name" type="text" name="text"><br>
+    <input id="first_name" type="text" name="first_name"><br>
     Last Name:
-    <input id="last_name" type="text" name="text"><br>
+    <input id="last_name" type="text" name="last_name"><br>
     Telephone:
-    <input id="telephone" type="text" name="text"><br>
+    <input id="telephone" type="text" name="telephone"><br>
     Start Date:
-    <input type="date" name="datevalue" id="start_date"><br>
+    <input type="start_date" name="datevalue" id="start_date"><br>
     Job:
     <!-- Loops through jobs object passed from index.js  -->
     <select id="job_code" name="job_code">

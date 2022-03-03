@@ -26,6 +26,8 @@ let handlebars = require("express-handlebars").create({
 });
 let bodyParser = require("body-parser");
 let mysql = require("./database/dbcon.js");
+let router = express.Router();
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -73,6 +75,22 @@ app.get("/employees", (req, res, next) => {
 	});
 });
 
+router.post('/employees', (req, res) => {
+	var mysql = req.app.get('mysql');
+	var sql = "INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)";
+	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error){
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Employee added');
+			res.redirect('/employees');
+		}
+	});
+});
+
+
 // Events Page
 app.get("/events", (req, res, next) => {
 	let selectEvents = 'SELECT Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
@@ -109,6 +127,21 @@ app.get("/events", (req, res, next) => {
 		});
 	});
 
+router.post('/events', (req, res) => {
+	var mysql = req.app.get('mysql');
+	var sql = "INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)";
+	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error){
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Event added');
+			res.redirect('/events');
+		}
+	});
+});
+
 // Jobs Page
 app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
@@ -122,6 +155,21 @@ app.get("/jobs", (req, res, next) => {
 		};
 	});
 	});
+
+router.post('/jobs', (req, res) => {
+	var mysql = req.app.get('mysql');
+	var sql = "INSERT INTO Jobs (job_title, hourly_rate) VALUES (?,?)";
+	var inserts = [req.body.job_title, req.body.hourly_rate];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error){
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Job added');
+			res.redirect('/jobs');
+		}
+	});
+});
 
 // Menu Page
 app.get("/menu", (req, res, next) => {
