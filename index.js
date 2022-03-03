@@ -27,6 +27,7 @@ let handlebars = require("express-handlebars").create({
 let bodyParser = require("body-parser");
 let mysql = require("./database/dbcon.js");
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -34,7 +35,6 @@ app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set('port', process.argv[2]);
 app.use(express.static("public"));
-
 
 
 // Imports images
@@ -73,8 +73,8 @@ app.get("/employees", (req, res, next) => {
 	});
 });
 // Insert Employee
-app.post('/employees', (req, res) => {
-	var sql = "INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)";
+app.post("/employees", (req, res) => {
+	var sql = 'INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)';
 	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
@@ -82,7 +82,7 @@ app.post('/employees', (req, res) => {
 			res.end();
 		} else {
 			console.log('Employee added');
-			res.redirect('/employees');
+			res.redirect("/employees");
 		}
 	});
 });
@@ -125,8 +125,8 @@ app.get("/events", (req, res, next) => {
 	});
 
 //Insert Event
-app.post('/events', (req, res) => {
-	var sql = "INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)";
+app.post("/events", (req, res) => {
+	var sql = 'INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)';
 	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
@@ -134,7 +134,7 @@ app.post('/events', (req, res) => {
 			res.end();
 		} else {
 			console.log('Event added');
-			res.redirect('/events');
+			res.redirect("/events");
 		}
 	});
 });
@@ -154,8 +154,8 @@ app.get("/jobs", (req, res, next) => {
 	});
 
 // Insert Job
-app.post('/jobs', (req, res) => {
-	var sql = "INSERT INTO Jobs (job_title, hourly_rate) VALUES (?,?)";
+app.post("/jobs", (req, res) => {
+	var sql = 'INSERT INTO Jobs (job_title, hourly_rate) VALUES (?,?)';
 	var inserts = [req.body.job_title, req.body.hourly_rate];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
@@ -163,7 +163,7 @@ app.post('/jobs', (req, res) => {
 			res.end();
 		} else {
 			console.log('Job added');
-			res.redirect('/jobs');
+			res.redirect("/jobs");
 		}
 	});
 });
@@ -195,9 +195,9 @@ app.get("/menu", (req, res, next) => {
 });
 
 // Insert Menu Item
-app.post('/menu', (req, res) => {
+app.post("/menu", (req, res) => {
 	// var mysql = req.app.get('mysql');
-	var sql = "INSERT INTO Drinks (drink_name, ingredient_1, ingredient_2, ingredient_3, ingredient_4, ingredient_5, price) VALUES (?,?,?,?,?,?,?)";
+	var sql = 'INSERT INTO Drinks (drink_name, ingredient_1, ingredient_2, ingredient_3, ingredient_4, ingredient_5, price) VALUES (?,?,?,?,?,?,?)';
 	var inserts = [req.body.drink_name, req.body.ingredient_1, req.body.ingredient_2, req.body.ingredient_3, req.body.ingredient_4, req.body.ingredient_5, req.body.price];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error){
@@ -205,7 +205,7 @@ app.post('/menu', (req, res) => {
 			res.end();
 		} else {
 			console.log('Menu Item added');
-			res.redirect('/menu');
+			res.redirect("/menu");
 		}
 	});
 });
@@ -224,6 +224,21 @@ app.get("/inventory", (req, res, next) => {
 		};
 	});
 	});
+
+// Insert Item
+app.post("/inventory", (req, res) => {
+	var sql = 'INSERT INTO Inventory (name, category, btl_cost, cse_cost, distributor) VALUES (?,?,?,?,?)';
+	var inserts = [req.body.name, req.body.category, req.body.btl_cost, req.body.cse_cost, req.body.distributor];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error){
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Item added');
+			res.redirect("/inventory");
+		}
+	});
+});
 
 // 404 not found
 app.use((req,res) => { 
