@@ -14,7 +14,7 @@
 </div>
     <h1>Databar Events</h1>
 
-<!-- Order By -->
+{{!-- <!-- Order By -->
 <form action="">
   <label for="sort_by">Sort By:</label>
   <select name="sort_by" id="sort_by">
@@ -23,13 +23,14 @@
   </select>
   <input type="submit" value="Submit">
 </form>
-<br>
+<br> --}}
 
 <p>Browse existing events or update/delete an event..</p> 
 <!-- Events Table  -->
 <table>
     <thead style="border: 1px solid black">
         <tr>
+            <th style="border: 1px solid black">Event ID</th>
             <th style="border: 1px solid black">Event Name</th>
             <th style="border: 1px solid black">Event Date</th>
             <th style="border: 1px solid black">Employee</th>
@@ -44,6 +45,7 @@
         <!-- Loops through employees object passed from index.js  -->
         {{#each results}}
         <tr>
+        <td style="border: 1px solid black"><div contenteditable>{{this.event_ID}}</div></td> <!-- Event ID-->
         <td style="border: 1px solid black"><div contenteditable>{{this.event_name}}</div></td> <!-- Event -->
         <td style="border: 1px solid black"><div contenteditable>{{this.event_date}}</div></td> <!-- Event Date -->
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_1}}</div></td> <!-- Employee 1 -->
@@ -53,7 +55,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_5}}</div></td> <!-- Employee 5--> 
         <td style="border: 1px solid black"><div contenteditable>{{this.guest_count}}</div></td> <!-- Guest Count -->
         <td style="border: 1px solid black"><div contenteditable>{{this.drink_special}}</div></td> <!-- Drink Special -->
-        <td><button>Delete</button></td>
+        <td><button onclick="deleteItem({{this.event_ID}})">Delete</button></td>
         <td><button>Update</button></td>
         </tr>
         {{/each}}
@@ -122,4 +124,3 @@
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
-

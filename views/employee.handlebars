@@ -1,4 +1,5 @@
 <!-- Nav Bar -->
+<html>
 <div id="nav_bar">
     <ul>
         <li><a href="/">HOME</a></li>
@@ -16,13 +17,13 @@
 <!-- Order By -->
 
 <form action="">
-  <label for="sort_by">Sort By:</label>
-  <select name="sort_by" id="sort_by">
-    <option value="first_name">First Name</option>
-    <option value="last_name">Last Name</option>
-    <option value="job_code">Job Title</option>
+  <label for="filter_by">Filter By:</label>
+  <select name="job_id" id="filter_by">
+    {{#each jobs}}
+    <option id= 'filter_by_value' value={{this.job_code}}>{{this.job_title}}</option>
+    {{/each}}
   </select>
-  <input type="submit" value="Submit">
+  <input type="submit" value="Filter" onclick="filterEmployees()">
 </form>
 <br>
 
@@ -32,6 +33,7 @@
 <table>
     <thead style="border: 1px solid black">
         <tr>
+            <th style="border: 1px solid black">Employee ID</th>
             <th style="border: 1px solid black">First Name</th>
             <th style="border: 1px solid black">Last Name</th>
             <th style="border: 1px solid black">Telephone</th>
@@ -42,12 +44,13 @@
     <!-- Loops through results object passed from index.js  -->
     {{#each results}}
     <tr>
+        <td style="border: 1px solid black"><div contenteditable>{{this.employee_ID}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.first_name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.last_name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.telephone}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.start_date}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
-        <td><button>Delete</button></td>
+         <td><button onclick="deleteItem({{this.employee_ID}})">Delete</button></td>
         <td><button>Update</button></td>
     </tr>
     {{/each}}
@@ -83,4 +86,4 @@
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
-
+</html>

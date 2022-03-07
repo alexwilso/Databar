@@ -39,7 +39,7 @@ CREATE TABLE `Employees` (
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`telephone` varchar (255) NOT NULL,
-	`job_code` int NOT NULL,
+	`job_code` int,
 	`start_date` DATE NOT NULL,
 	PRIMARY KEY (`employee_ID`),
 	FOREIGN KEY (`job_code`) REFERENCES `Jobs` (`job_code`)
