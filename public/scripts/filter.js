@@ -1,8 +1,8 @@
 function filterEmployees(){
+    // Filters employees based on job code. Redirects user to filter page.
     // Get id of selected job code
-    let job_id = parseInt(document.getElementById('filter_by_value').value);
-    window.location.href = '/employees'
-    // // construct url to redirect
+    let job_id = parseInt(document.getElementById('filter_by').value);
+    // construct url to redirect
     $.ajax({
         url: `/employees/filter/${job_id}`,
         type: 'GET',
@@ -12,5 +12,5 @@ function filterEmployees(){
         fail: function(result){
             alert('Fail');
         }
-    })
+    });
 }

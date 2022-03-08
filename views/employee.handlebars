@@ -1,5 +1,4 @@
 <!-- Nav Bar -->
-<html>
 <div id="nav_bar">
     <ul>
         <li><a href="/">HOME</a></li>
@@ -11,24 +10,23 @@
 </div>
 <!-- Page Icon -->
 <div>
-<img class="page_icon" src="images/employees.jpg">
+<img class="page_icon" src="/images/employees.jpg">
 <h1>Databar Employees</h1>
 </div>
-<!-- Order By -->
 
-<form action="">
+<!-- Filter By -->
+<form action='' method=''>
   <label for="filter_by">Filter By:</label>
   <select name="job_id" id="filter_by">
     {{#each jobs}}
-    <option id= 'filter_by_value' value={{this.job_code}}>{{this.job_title}}</option>
+    <option id= 'filter_by_value' value="{{this.job_code}}">{{this.job_title}}</option>
     {{/each}}
   </select>
-  <input type="submit" value="Filter" onclick="filterEmployees()">
+  <input class="filterButton" type="button" value="Filter" onclick="filterEmployees()">
+  <input type="button" value="Clear Filter" onclick="location.href='/employees'">
 </form>
-<br>
 
 <!-- Employee Table  -->
-
 <p>Browse existing employeees or update/delete an employees..</p> 
 <table>
     <thead style="border: 1px solid black">
@@ -42,6 +40,7 @@
         </tr>
     </thead>
     <!-- Loops through results object passed from index.js  -->
+    <tbody id="header">
     {{#each results}}
     <tr>
         <td style="border: 1px solid black"><div contenteditable>{{this.employee_ID}}</div></td>
@@ -54,14 +53,9 @@
         <td><button>Update</button></td>
     </tr>
     {{/each}}
-    
-
-    <tbody id="header">
-
     </tbody>
 </table>
 <br>
-
 
 <br>
 
@@ -86,4 +80,4 @@
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
-</html>
+
