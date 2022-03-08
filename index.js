@@ -22,6 +22,31 @@ app.set("view engine", "handlebars");
 app.set('port', process.argv[2]);
 // app.use('/', express.static('scripts'));
 
+function getJobs(res, sql, context, complete){
+	sql.pool.query('SELECT * FROM Jobs', (err, rows, fields) => {
+		if (err) {
+			console.log(err);
+		} else {
+			context["jobs"] = rows;
+			complete();	
+		}
+	}) ;
+};
+
+function getEmployees(req, res, sql, context, complete){
+	let job_id = parseInt(req.params.job_id)
+	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Jobs.job_code = ${job_id}`;
+	var inserts = [req.params.homeworld]
+	sql.pool.query(selectEmployees, inserts, function(error, results, fields){
+		  if(error){
+			  res.write(JSON.stringify(error));
+			  res.end();
+		  }
+		  context.results = results;
+		  complete();
+	  });
+};
+
 
 // Imports images
 app.use(express.static('public'));
@@ -52,6 +77,7 @@ app.get("/employees", (req, res, next) => {
 				} else {
 				console.log('Successful employees select');
 				context["jobs"] = jobrows; // results of query
+				// console.log(context)
 				// Render to employee.handlebars
 				res.render("employee", context);
 				};
@@ -254,8 +280,10 @@ app.post("/inventory", (req, res) => {
 
 // Deleting items from database
 app.delete('/:id', function(req, res){
-	let table = urls[`${req.headers.referer}`][0]; // gets table name
-	let id =  urls[`${req.headers.referer}`][1]; // get id
+	let url = `http://${req.headers.host}`;
+	let tableName = req.headers.referer;
+	let table = urls[tableName.slice(url.length)][0]; // gets table name
+	let id =  urls[tableName.slice(url.length)][1]; // get id
 	let sql = `DELETE FROM ${table} WHERE ${id} = ?`;
 	var inserts = [req.params.id];
 	mysql.pool.query(sql, inserts, function(error, results, fields){
@@ -267,24 +295,57 @@ app.delete('/:id', function(req, res){
 		}else{
 			res.status(202).end();
 		}
-	})
+	});
 });
 
 /*Display all people from a given job_id. Requires web based javascript to delete users with AJAX*/
-app.get('/filter/:job_id', function(req, res){
-	let callbackCount = 0;
+app.get('/employees/filter/:job_id', (req, res, next) => {
+	req.url = '/events';
 	let context = {};
-	var inserts = [req.params.job_id];
-	console.log(inserts)
+	let callbackCount = 0;
 	context.jsscripts = ["delete.js", "filter.js"];
+	getJobs(res, mysql, context, complete);
+	getEmployees(req, res, mysql, context, complete)
 	function complete(){
 		callbackCount++;
 		if(callbackCount >= 2){
-			res.render('employees', context);
+			console.log(context);
+			res.render('employee', context);
 		}
-
 	}
+
 });
+
+// /*Display all people from a given job_id. Requires web based javascript to delete users with AJAX*/
+// app.get('/filter/:job_id', (req, res, next) => {
+// 	let context = {};
+// 	let job_id = parseInt(req.params.job_id)
+// 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Employees.employee_ID = ${job_id}`;
+// 	let jobValues = 'SELECT * FROM Jobs';
+// 	context.jsscripts = ["delete.js", "filter.js"];
+// 	mysql.pool.query(selectEmployees, function(error, results, fields){
+// 		if(error){
+// 			console.log(error)
+// 			res.write(JSON.stringify(error));
+// 			res.status(400);
+// 			res.end();
+// 		}else{
+// 			context["results"] = results; // results of query
+// 			// Select Jobs query
+// 			mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
+// 				if (err) {
+// 					console.log(err);
+// 				} else {
+// 				console.log('Successful employees select');
+// 				context["jobs"] = jobrows; // results of query
+// 				console.log(context);
+// 				// Render to employee.handlebars
+// 				res.render("employee", context);
+// 				};
+// 			});
+// 		}
+// 	});
+// });
 
 // 404 not found
 app.use((req,res) => { 
