@@ -1,4 +1,5 @@
 function deleteItem(id){
+    // Deletes items with provided id.
     $.ajax({
         url: `/${id}`,
         type: 'DELETE',

@@ -1,27 +1,34 @@
-// Creates table and populates with sample data
 const helpers = require("./public/helpers/main.js").obj; // helper functions
-const urls = require("./utility/url_lookup.js").urls; // table lookup for url functions
-require('./database/import.js');
+const urls = require("./utility/url_lookup.js").urls; // table lookup for url functions. Used for delete function
 
+// Express set up
 let express = require("express");
 let app = express();
-let handlebars = require("express-handlebars").create({
+
+// Sets up database and creates tables
+let mysql = require("./database/dbcon.js");
+require('./database/import.js');
+
+// Set up body parser
+let bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+ // Set up handlebars
+ let handlebars = require("express-handlebars").create({
 	defaultLayout:"main",
 	helpers: helpers
 });
-let bodyParser = require("body-parser");
-let mysql = require("./database/dbcon.js");
-
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-// app.use('/static', express.static('scripts'));
-
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
-app.set('port', process.argv[2]);
-// app.use('/', express.static('scripts'));
+app.set('views', './views');
 
+// Imports images
+app.use(express.static('public'));
+
+app.set('port', process.argv[2]); // port set
+
+// Gets list of jobs for filtered employees page
 function getJobs(res, sql, context, complete){
 	sql.pool.query('SELECT * FROM Jobs', (err, rows, fields) => {
 		if (err) {
@@ -33,6 +40,7 @@ function getJobs(res, sql, context, complete){
 	}) ;
 };
 
+// Gets list of jobs for filtered employees page
 function getEmployees(req, res, sql, context, complete){
 	let job_id = parseInt(req.params.job_id)
 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Jobs.job_code = ${job_id}`;
@@ -46,10 +54,6 @@ function getEmployees(req, res, sql, context, complete){
 		  complete();
 	  });
 };
-
-
-// Imports images
-app.use(express.static('public'));
 
 // Home Page
 app.get("/", (req, res, next) => {
@@ -298,9 +302,8 @@ app.delete('/:id', function(req, res){
 	});
 });
 
-/*Display all people from a given job_id. Requires web based javascript to delete users with AJAX*/
+// Display all people from a given job_id.
 app.get('/employees/filter/:job_id', (req, res, next) => {
-	req.url = '/events';
 	let context = {};
 	let callbackCount = 0;
 	context.jsscripts = ["delete.js", "filter.js"];
@@ -309,43 +312,12 @@ app.get('/employees/filter/:job_id', (req, res, next) => {
 	function complete(){
 		callbackCount++;
 		if(callbackCount >= 2){
-			console.log(context);
 			res.render('employee', context);
 		}
 	}
 
 });
 
-// /*Display all people from a given job_id. Requires web based javascript to delete users with AJAX*/
-// app.get('/filter/:job_id', (req, res, next) => {
-// 	let context = {};
-// 	let job_id = parseInt(req.params.job_id)
-// 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Employees.employee_ID = ${job_id}`;
-// 	let jobValues = 'SELECT * FROM Jobs';
-// 	context.jsscripts = ["delete.js", "filter.js"];
-// 	mysql.pool.query(selectEmployees, function(error, results, fields){
-// 		if(error){
-// 			console.log(error)
-// 			res.write(JSON.stringify(error));
-// 			res.status(400);
-// 			res.end();
-// 		}else{
-// 			context["results"] = results; // results of query
-// 			// Select Jobs query
-// 			mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
-// 				if (err) {
-// 					console.log(err);
-// 				} else {
-// 				console.log('Successful employees select');
-// 				context["jobs"] = jobrows; // results of query
-// 				console.log(context);
-// 				// Render to employee.handlebars
-// 				res.render("employee", context);
-// 				};
-// 			});
-// 		}
-// 	});
-// });
 
 // 404 not found
 app.use((req,res) => { 
