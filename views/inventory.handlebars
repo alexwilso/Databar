@@ -15,7 +15,7 @@
        <h1>Databar Inventory</h1>
        
 <!-- Order By  -->
-
+{{!-- 
 <form action="">
   <label for="sort_by">Sort By:</label>
   <select name="sort_by" id="sort_by">
@@ -31,7 +31,7 @@
   </select>
   <input type="submit" value="Submit">
 </form>
-<br>
+<br> --}}
 
 <!-- Inventory Table -->
 <p>Browse existing inventory or update/delete an inventory..</p> 
@@ -54,7 +54,7 @@
         <td style="border: 1px solid black"><div contenteditable>${{this.btl_cost}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{isNullInventory this.cse_cost}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.distributor}}</div></td>
-        <td><button>Delete</button></td>
+        <td><button onclick="deleteItem({{this.product_ID}})">Delete</button></td>
         <td><button>Update</button></td>
     </tr>
     {{/each}}

@@ -15,7 +15,7 @@
     <h1>Jobs at Databar</h1>
 
 <!-- Order By  -->
-<form action="">
+{{!-- <form action="">
   <label for="sort_by">Sort By:</label>
   <select name="sort_by" id="sort_by">
     <option value="job_title">Title</option>
@@ -23,7 +23,7 @@
   </select>
   <input type="submit" value="Submit">
 </form>
-<br>
+<br> --}}
 
 <p>Browse existing jobs or update/delete an job..</p> 
 
@@ -32,15 +32,17 @@
 <table>
     <thead style="border: 1px solid black">
         <tr>
+            <th style="border: 1px solid black">Job ID</th>
             <th style="border: 1px solid black">Job Title</th>
             <th style="border: 1px solid black">Hourly Rate</th>
         </tr>
     </thead>
         {{#each results}}
             <tr>
+            <td style="border: 1px solid black"><div contenteditable>{{this.job_code}}</div></td>
             <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
             <td style="border: 1px solid black"><div contenteditable>{{this.hourly_rate}}</div></td>
-            <td><button>Delete</button></td>
+            <td><button onclick="deleteItem({{this.job_code}})">Delete</button></td>
             <td><button>Update</button></td>
             </tr>
         {{/each}}

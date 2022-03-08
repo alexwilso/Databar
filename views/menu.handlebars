@@ -16,7 +16,7 @@
 
 <!-- Order By  -->
 
-<form action="">
+{{!-- <form action="">
   <label for="sort_by">Sort By:</label>
   <select name="sort_by" id="sort_by">
     <option value="Whiskey/Bourbon">Whiskey/Bourbon</option>
@@ -29,7 +29,7 @@
   </select>
   <input type="submit" value="Submit">
 </form>
-<br>
+<br> --}}
 
 <!-- Menu Table -->
 <p>Browse existing drinks or update/delete an drinks..</p> 
@@ -56,7 +56,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.ingredient_4}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.ingredient_5}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.price}}</div></td>
-        <td><button>Delete</button></td>
+         <td><button onclick="deleteItem({{this.menu_item}})">Delete</button></td>
         <td><button>Update</button></td>
     </tr>
     {{/each}}

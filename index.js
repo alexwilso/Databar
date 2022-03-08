@@ -1,28 +1,13 @@
 // Creates table and populates with sample data
+const helpers = require("./public/helpers/main.js").obj; // helper functions
+const urls = require("./utility/url_lookup.js").urls; // table lookup for url functions
 require('./database/import.js');
 
 let express = require("express");
 let app = express();
 let handlebars = require("express-handlebars").create({
 	defaultLayout:"main",
-	helpers: { // Helper functions for handlebars file
-		// Called if value is undefined, replaces with null 
-		isNull: function(value){
-			if (value == undefined) {
-				return 'NULL';
-			} else {
-				return value;
-			};
-		},
-		// Called in inventory.handlebars. Adds $ if value.
-		isNullInventory: function(value){
-			if (value == undefined) {
-				return 'NULL';
-			} else {
-				return `$${value}`;
-			};
-		},
-	}
+	helpers: helpers
 });
 let bodyParser = require("body-parser");
 let mysql = require("./database/dbcon.js");
@@ -30,11 +15,37 @@ let mysql = require("./database/dbcon.js");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// app.use('/static', express.static('scripts'));
 
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set('port', process.argv[2]);
-app.use(express.static("public"));
+// app.use('/', express.static('scripts'));
+
+function getJobs(res, sql, context, complete){
+	sql.pool.query('SELECT * FROM Jobs', (err, rows, fields) => {
+		if (err) {
+			console.log(err);
+		} else {
+			context["jobs"] = rows;
+			complete();	
+		}
+	}) ;
+};
+
+function getEmployees(req, res, sql, context, complete){
+	let job_id = parseInt(req.params.job_id)
+	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Jobs.job_code = ${job_id}`;
+	var inserts = [req.params.homeworld]
+	sql.pool.query(selectEmployees, inserts, function(error, results, fields){
+		  if(error){
+			  res.write(JSON.stringify(error));
+			  res.end();
+		  }
+		  context.results = results;
+		  complete();
+	  });
+};
 
 
 // Imports images
@@ -51,6 +62,7 @@ app.get("/employees", (req, res, next) => {
 	let selectEmployees = 'SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code';
 	let jobValues = 'SELECT * FROM Jobs';
 	let context = {};
+	context.jsscripts = ["delete.js", "filter.js"];
 	// Select employees query
 	mysql.pool.query(selectEmployees, (err, rows, fields) => {
 		if (err) {
@@ -65,6 +77,7 @@ app.get("/employees", (req, res, next) => {
 				} else {
 				console.log('Successful employees select');
 				context["jobs"] = jobrows; // results of query
+				// console.log(context)
 				// Render to employee.handlebars
 				res.render("employee", context);
 				};
@@ -91,10 +104,11 @@ app.post("/employees", (req, res) => {
 
 // Events Page
 app.get("/events", (req, res, next) => {
-	let selectEvents = 'SELECT Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
+	let selectEvents = 'SELECT Events.event_ID, Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
 	let selectDrinks = 'SELECT * FROM Drinks';
 	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees'
 	let context = {}
+	context.jsscripts = ["delete.js"];
 	// Select Events
 	mysql.pool.query(selectEvents, (err, rows, fields) => {
 		if (err) {
@@ -116,6 +130,7 @@ app.get("/events", (req, res, next) => {
 					} else {
 						console.log('successful employees query')
 						context['employees'] = empRows; // results of query
+						// console.log(context);
 						res.render("events", context); // Renders handlebar file and context Obj	
 							};
 						});
@@ -124,6 +139,7 @@ app.get("/events", (req, res, next) => {
 			};
 		});
 	});
+	
 
 //Insert Event
 app.post("/events", (req, res) => {
@@ -148,13 +164,16 @@ app.post("/events", (req, res) => {
 // Jobs Page
 app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
+	let context = {}
+	context.jsscripts = ["delete.js"];
 	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectJobs, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
+			context['results'] = rows; // results of query
 			console.log('Successful jobs select');
-			res.render("jobs", {results: rows}); // Renders handlebar file and context Obj
+			res.render("jobs", context); // Renders handlebar file and context Obj
 		};
 	});
 	});
@@ -180,6 +199,7 @@ app.get("/menu", (req, res, next) => {
 	let selectinventory = 'Select Inventory.product_ID, Inventory.name FROM Inventory';
 	// Select menu
 	let context = {};
+	context.jsscripts = ["delete.js"];
 	mysql.pool.query(selectMenu, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
@@ -224,13 +244,16 @@ app.post("/menu", (req, res) => {
 // Inventory Page
 app.get("/inventory", (req, res, next) => {
 	let selectInventory = 'SELECT * FROM Inventory';
+	let context = {}
+	context.jsscripts = ["delete.js"];
 	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectInventory, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
+			context['results'] = rows; // results of query
 			console.log('Successful inventory select');
-			res.render("inventory", {results: rows});
+			res.render("inventory", context);
 		};
 	});
 	});
@@ -254,6 +277,75 @@ app.post("/inventory", (req, res) => {
 		}
 	});
 });
+
+// Deleting items from database
+app.delete('/:id', function(req, res){
+	let url = `http://${req.headers.host}`;
+	let tableName = req.headers.referer;
+	let table = urls[tableName.slice(url.length)][0]; // gets table name
+	let id =  urls[tableName.slice(url.length)][1]; // get id
+	let sql = `DELETE FROM ${table} WHERE ${id} = ?`;
+	var inserts = [req.params.id];
+	mysql.pool.query(sql, inserts, function(error, results, fields){
+		if(error){
+			console.log(error)
+			res.write(JSON.stringify(error));
+			res.status(400);
+			res.end();
+		}else{
+			res.status(202).end();
+		}
+	});
+});
+
+/*Display all people from a given job_id. Requires web based javascript to delete users with AJAX*/
+app.get('/employees/filter/:job_id', (req, res, next) => {
+	req.url = '/events';
+	let context = {};
+	let callbackCount = 0;
+	context.jsscripts = ["delete.js", "filter.js"];
+	getJobs(res, mysql, context, complete);
+	getEmployees(req, res, mysql, context, complete)
+	function complete(){
+		callbackCount++;
+		if(callbackCount >= 2){
+			console.log(context);
+			res.render('employee', context);
+		}
+	}
+
+});
+
+// /*Display all people from a given job_id. Requires web based javascript to delete users with AJAX*/
+// app.get('/filter/:job_id', (req, res, next) => {
+// 	let context = {};
+// 	let job_id = parseInt(req.params.job_id)
+// 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Employees.employee_ID = ${job_id}`;
+// 	let jobValues = 'SELECT * FROM Jobs';
+// 	context.jsscripts = ["delete.js", "filter.js"];
+// 	mysql.pool.query(selectEmployees, function(error, results, fields){
+// 		if(error){
+// 			console.log(error)
+// 			res.write(JSON.stringify(error));
+// 			res.status(400);
+// 			res.end();
+// 		}else{
+// 			context["results"] = results; // results of query
+// 			// Select Jobs query
+// 			mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
+// 				if (err) {
+// 					console.log(err);
+// 				} else {
+// 				console.log('Successful employees select');
+// 				context["jobs"] = jobrows; // results of query
+// 				console.log(context);
+// 				// Render to employee.handlebars
+// 				res.render("employee", context);
+// 				};
+// 			});
+// 		}
+// 	});
+// });
 
 // 404 not found
 app.use((req,res) => { 
