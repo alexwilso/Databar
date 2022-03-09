@@ -1,4 +1,4 @@
-const helpers = require("./public/helpers/main.js").obj; // helper functions
+const helpers = require("./public/helpers/helperObj.js").obj; // helper functions
 const urls = require("./utility/url_lookup.js").urls; // table lookup for url functions. Used for delete function
 
 // Express set up
@@ -67,6 +67,7 @@ app.get("/employees", (req, res, next) => {
 	let jobValues = 'SELECT * FROM Jobs';
 	let context = {};
 	context.jsscripts = ["delete.js", "filter.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Select employees query
 	mysql.pool.query(selectEmployees, (err, rows, fields) => {
 		if (err) {
@@ -110,9 +111,10 @@ app.post("/employees", (req, res) => {
 app.get("/events", (req, res, next) => {
 	let selectEvents = 'SELECT Events.event_ID, Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
 	let selectDrinks = 'SELECT * FROM Drinks';
-	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees'
+	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
 	let context = {}
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Select Events
 	mysql.pool.query(selectEvents, (err, rows, fields) => {
 		if (err) {
@@ -170,6 +172,7 @@ app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
 	let context = {}
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectJobs, (err, rows, fields) => {
 		if (err) {
@@ -204,6 +207,7 @@ app.get("/menu", (req, res, next) => {
 	// Select menu
 	let context = {};
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	mysql.pool.query(selectMenu, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
@@ -250,6 +254,7 @@ app.get("/inventory", (req, res, next) => {
 	let selectInventory = 'SELECT * FROM Inventory';
 	let context = {}
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectInventory, (err, rows, fields) => {
 		if (err) {
@@ -307,6 +312,7 @@ app.get('/employees/filter/:job_id', (req, res, next) => {
 	let context = {};
 	let callbackCount = 0;
 	context.jsscripts = ["delete.js", "filter.js"];
+	context.events = "/scripts/errorCheck.js";
 	getJobs(res, mysql, context, complete);
 	getEmployees(req, res, mysql, context, complete)
 	function complete(){
