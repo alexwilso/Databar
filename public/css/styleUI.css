@@ -95,3 +95,8 @@ fieldset {
     font-size: 15px;
     font-family: "Gill Sans", sans-serif;
 }
+
+#cur_tab{
+    color: white;
+    background-color: black; 
+}
