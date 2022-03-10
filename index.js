@@ -23,7 +23,7 @@ app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set('views', './views');
 
-// Imports images
+// Sets static directory to public
 app.use(express.static('public'));
 
 app.set('port', process.argv[2]); // port set
@@ -44,7 +44,7 @@ function getJobs(res, sql, context, complete){
 function getEmployees(req, res, sql, context, complete){
 	let job_id = parseInt(req.params.job_id)
 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Jobs.job_code = ${job_id}`;
-	var inserts = [req.params.homeworld]
+	var inserts = [req.params.job_id]
 	sql.pool.query(selectEmployees, inserts, function(error, results, fields){
 		  if(error){
 			  res.write(JSON.stringify(error));

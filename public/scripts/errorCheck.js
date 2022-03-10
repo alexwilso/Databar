@@ -1,5 +1,7 @@
-let errorField = document.getElementById("error");
 let regex = /[a-zA-Z]/g;
+
+// Span for error display
+let errorField = document.getElementById("error");
 let lineBreak = document.createElement('br');
 
 // Gets all fields that cannot contain letters and adds to array
