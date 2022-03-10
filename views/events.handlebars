@@ -2,10 +2,11 @@
 <div id="nav_bar">
     <ul>
         <li><a href="/">HOME</a></li>
+        <li><a id="cur_tab" href="">EVENTS</a></li>
         <li><a href="/employees">EMPLOYEES</a></li>
         <li><a href="/menu">MENU</a></li>
         <li><a href="/inventory">INVENTORY</a></li>
-        <li><a href="/jobs">JOBS</a></li>
+        <li style="border-right: 2px solid;"><a href="/jobs">JOBS</a></li>
     </ul>
 </div>
 <!-- Page Icon -->
@@ -47,7 +48,7 @@
         <tr>
         <td style="border: 1px solid black"><div contenteditable>{{this.event_ID}}</div></td> <!-- Event ID-->
         <td style="border: 1px solid black"><div contenteditable>{{this.event_name}}</div></td> <!-- Event -->
-        <td style="border: 1px solid black"><div contenteditable>{{this.event_date}}</div></td> <!-- Event Date -->
+        <td style="border: 1px solid black"><div contenteditable>{{formatDate this.event_date}}</div></td> <!-- Event Date -->
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_1}}</div></td> <!-- Employee 1 -->
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_2}}</div></td> <!-- Employee 2 -->
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_3}}</div></td> <!-- Employee 3 -->
@@ -114,6 +115,7 @@
 
     Guest Count:
     <input id="guest_count" type="integer" name="guest_count" required><br>
+    <span id="error"></span>
 
     Drink Speial:
     <!-- Loops through drinks object passed from index.js  -->
@@ -124,3 +126,4 @@
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
+<script src="{{this.events}}"></script>

@@ -39,7 +39,7 @@ CREATE TABLE `Employees` (
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`telephone` varchar (255) NOT NULL,
-	`job_code` int,
+	`job_code` int NOT NULL,
 	`start_date` DATE NOT NULL,
 	PRIMARY KEY (`employee_ID`),
 	FOREIGN KEY (`job_code`) REFERENCES `Jobs` (`job_code`)
@@ -51,7 +51,7 @@ CREATE TABLE `Employees` (
 LOCK TABLE `Employees` WRITE;
 -- SAMPLE DATA --
 INSERT INTO `Employees` (`first_name`, `last_name`, `telephone`, `job_code`, `start_date`)
-VALUES ('N/A', '', 'N/A', 1, '9999-12-31');
+VALUES ('Bob', 'Grand', '3312312', 1, '9999-12-31');
 INSERT INTO `Employees` (`first_name`, `last_name`, `telephone`, `job_code`, `start_date`)
 VALUES ('John', 'Smith', '21241241', 1, '2008-11-11');
 INSERT INTO `Employees` (`first_name`, `last_name`, `telephone`, `job_code`, `start_date`)
@@ -126,19 +126,19 @@ CREATE TABLE `Drinks` (
 	FOREIGN KEY (`ingredient_2`)
 	REFERENCES `Inventory` (`product_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`ingredient_3`)
 	REFERENCES `Inventory` (`product_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`ingredient_4`)
 	REFERENCES `Inventory` (`product_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`ingredient_5`)
 	REFERENCES `Inventory` (`product_ID`)	
 		ON UPDATE CASCADE
-		ON DELETE CASCADE);
+		ON DELETE SET NULL);
 
 
 --
@@ -175,23 +175,23 @@ CREATE TABLE `Events` (
 	FOREIGN KEY (`employee_1`) 
 	REFERENCES `Employees` (`employee_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`employee_2`) 
 	REFERENCES `Employees` (`employee_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`employee_3`) 
 	REFERENCES `Employees` (`employee_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`employee_4`) 
 	REFERENCES `Employees` (`employee_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`employee_5`) 
 	REFERENCES `Employees` (`employee_ID`)
 		ON UPDATE CASCADE
-		ON DELETE CASCADE,
+		ON DELETE SET NULL,
 	FOREIGN KEY (`menu_item`) 
 	REFERENCES `Drinks` (`menu_item`)
 		ON UPDATE CASCADE	
@@ -206,7 +206,6 @@ INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, 
 VALUES ('Awards Banquet', '2022-08-10', 1, 2, 3, 200, 2);
 INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, guest_count, menu_item)
 VALUES ('Family Reunion', '2022-06-15', 1, 2, 3, 100, 4);
-UNLOCK TABLES;
 INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, guest_count, menu_item)
 VALUES ('Target Happy Hour', '2022-06-17', 1, 2, 3, 20, 4);
 UNLOCK TABLES;

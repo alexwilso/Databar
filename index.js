@@ -1,4 +1,4 @@
-const helpers = require("./public/helpers/main.js").obj; // helper functions
+const helpers = require("./public/helpers/helperObj.js").obj; // helper functions
 const urls = require("./utility/url_lookup.js").urls; // table lookup for url functions. Used for delete function
 
 // Express set up
@@ -23,7 +23,7 @@ app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set('views', './views');
 
-// Imports images
+// Sets static directory to public
 app.use(express.static('public'));
 
 app.set('port', process.argv[2]); // port set
@@ -44,7 +44,7 @@ function getJobs(res, sql, context, complete){
 function getEmployees(req, res, sql, context, complete){
 	let job_id = parseInt(req.params.job_id)
 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Jobs.job_code = ${job_id}`;
-	var inserts = [req.params.homeworld]
+	var inserts = [req.params.job_id]
 	sql.pool.query(selectEmployees, inserts, function(error, results, fields){
 		  if(error){
 			  res.write(JSON.stringify(error));
@@ -67,6 +67,7 @@ app.get("/employees", (req, res, next) => {
 	let jobValues = 'SELECT * FROM Jobs';
 	let context = {};
 	context.jsscripts = ["delete.js", "filter.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Select employees query
 	mysql.pool.query(selectEmployees, (err, rows, fields) => {
 		if (err) {
@@ -108,11 +109,12 @@ app.post("/employees", (req, res) => {
 
 // Events Page
 app.get("/events", (req, res, next) => {
-	let selectEvents = 'SELECT Events.event_ID, Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item LEFT JOIN Employees ON Events.employee_1 = Employees.employee_ID';
+	let selectEvents = 'SELECT Events.event_ID, Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item';
 	let selectDrinks = 'SELECT * FROM Drinks';
-	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees'
+	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
 	let context = {}
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Select Events
 	mysql.pool.query(selectEvents, (err, rows, fields) => {
 		if (err) {
@@ -134,7 +136,6 @@ app.get("/events", (req, res, next) => {
 					} else {
 						console.log('successful employees query')
 						context['employees'] = empRows; // results of query
-						// console.log(context);
 						res.render("events", context); // Renders handlebar file and context Obj	
 							};
 						});
@@ -170,6 +171,7 @@ app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
 	let context = {}
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectJobs, (err, rows, fields) => {
 		if (err) {
@@ -204,6 +206,7 @@ app.get("/menu", (req, res, next) => {
 	// Select menu
 	let context = {};
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	mysql.pool.query(selectMenu, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
@@ -250,6 +253,7 @@ app.get("/inventory", (req, res, next) => {
 	let selectInventory = 'SELECT * FROM Inventory';
 	let context = {}
 	context.jsscripts = ["delete.js"];
+	context.events = "/scripts/errorCheck.js";
 	// Adds query to datatbase. Sends data to render file
 	mysql.pool.query(selectInventory, (err, rows, fields) => {
 		if (err) {
@@ -307,6 +311,7 @@ app.get('/employees/filter/:job_id', (req, res, next) => {
 	let context = {};
 	let callbackCount = 0;
 	context.jsscripts = ["delete.js", "filter.js"];
+	context.events = "/scripts/errorCheck.js";
 	getJobs(res, mysql, context, complete);
 	getEmployees(req, res, mysql, context, complete)
 	function complete(){
