@@ -136,7 +136,6 @@ app.get("/events", (req, res, next) => {
 					} else {
 						console.log('successful employees query')
 						context['employees'] = empRows; // results of query
-						// console.log(context);
 						res.render("events", context); // Renders handlebar file and context Obj	
 							};
 						});

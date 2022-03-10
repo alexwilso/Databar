@@ -14,6 +14,11 @@ let obj = { // Helper functions for handlebars file
         } else {
             return `$${value}`;
         };
+    },
+    // Returns formatted date
+    formatDate: function(date){
+        var format = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString("en-US", format)
     }
 };
 module.exports = { obj };
