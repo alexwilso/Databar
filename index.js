@@ -44,7 +44,7 @@ function getJobs(res, sql, context, complete){
 function getEmployees(req, res, sql, context, complete){
 	let job_id = parseInt(req.params.job_id)
 	let selectEmployees = `SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code WHERE Jobs.job_code = ${job_id}`;
-	var inserts = [req.params.homeworld]
+	var inserts = [req.params.homeworld]  // homeworld?
 	sql.pool.query(selectEmployees, inserts, function(error, results, fields){
 		  if(error){
 			  res.write(JSON.stringify(error));
@@ -66,7 +66,7 @@ app.get("/employees", (req, res, next) => {
 	let selectEmployees = 'SELECT * FROM Employees LEFT JOIN Jobs ON Employees.job_code = Jobs.job_code';
 	let jobValues = 'SELECT * FROM Jobs';
 	let context = {};
-	context.jsscripts = ["delete.js", "filter.js"];
+	context.jsscripts = ["delete.js", "filter.js", "update.js"];
 	// Select employees query
 	mysql.pool.query(selectEmployees, (err, rows, fields) => {
 		if (err) {

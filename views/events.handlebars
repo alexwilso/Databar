@@ -56,7 +56,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{this.guest_count}}</div></td> <!-- Guest Count -->
         <td style="border: 1px solid black"><div contenteditable>{{this.drink_special}}</div></td> <!-- Drink Special -->
         <td><button onclick="deleteItem({{this.event_ID}})">Delete</button></td>
-        <td><button>Update</button></td>
+        <td><button onclick="updateItem({{this.event_ID}})">Update</button></td>
         </tr>
         {{/each}}
 

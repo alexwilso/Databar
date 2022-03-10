@@ -55,7 +55,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{isNullInventory this.cse_cost}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.distributor}}</div></td>
         <td><button onclick="deleteItem({{this.product_ID}})">Delete</button></td>
-        <td><button>Update</button></td>
+        <td><button onclick="updateItem({{this.product_ID}})">Update</button></td>
     </tr>
     {{/each}}
     

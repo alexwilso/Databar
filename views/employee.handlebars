@@ -50,7 +50,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{this.start_date}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
          <td><button onclick="deleteItem({{this.employee_ID}})">Delete</button></td>
-        <td><button>Update</button></td>
+         <td><button onclick="updateItem({{this.employee_ID}})">Update</button></td>
     </tr>
     {{/each}}
     </tbody>
