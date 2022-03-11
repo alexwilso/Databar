@@ -289,10 +289,8 @@ app.post("/inventory", (req, res) => {
 // Deleting items from database
 app.delete('/:id', function(req, res){
 	let url = `http://${req.headers.host}`;
-	let tableName = req.headers.referer;
-	let table = urls[tableName.slice(url.length)][0]; // gets table name
-	let id =  urls[tableName.slice(url.length)][1]; // get id
-	let sql = `DELETE FROM ${table} WHERE ${id} = ?`;
+	let tableName = req.headers.referer.slice(url.length);
+	let sql = `DELETE FROM ${urls[tableName][0]} WHERE ${urls[tableName][1]} = ?`;
 	var inserts = [req.params.id];
 	mysql.pool.query(sql, inserts, function(error, results, fields){
 		if(error){
