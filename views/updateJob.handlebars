@@ -1,0 +1,27 @@
+<!-- Nav Bar -->
+<div id="nav_bar">
+    <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/employees">EMPLOYEES</a></li>
+        <li><a href="/events">EVENTS</a></li>
+        <li><a href="/menu">MENU</a></li>
+        <li><a href="/inventory">INVENTORY</a></li>
+        <li><a href="/jobs">JOBS</a></li>
+    </ul>
+</div>
+<!-- Page Icon -->
+    <div>
+    <img class="page_icon" src="/images/jobs.jpg">
+    </div>
+    <h1>Edit Jobs</h1>
+<fieldset>
+<form id="editJob" action="/jobs" method="PUT">
+    Job Title:
+    <input id="job_title" type="text" name="job_title" required><br>
+    Hourly Rate:
+    <input id="hourly_rate" type="decimal" name="hourly_rate" required><br>
+    <span id="error"></span>
+    <input type="submit" value="Submit">    
+</form>
+</fieldset>
+<script src="{{this.events}}"></script>

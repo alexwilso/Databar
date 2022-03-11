@@ -1,0 +1,42 @@
+<!-- Nav Bar -->
+<div id="nav_bar">
+    <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/employees">EMPLOYEES</a></li>
+        <li><a href="/events">EVENTS</a></li>
+        <li><a href="/menu">MENU</a></li>
+        <li><a href="/inventory">INVENTORY</a></li>
+        <li><a href="/jobs">JOBS</a></li>
+    </ul>
+</div>
+<!-- Page Icon -->    
+    <div>
+       <img class="page_icon" src="/images/inventory.jpg">
+    </div>
+       <h1>Edit Item</h1>
+    <fieldset>
+<form id="editInventory" action="/inventory" method="PUT">
+    Name:
+    <input id="name" type="text" name="name" required><br>
+    Category:
+    <select name="category" id="category">
+        <option value="Whiskey/Bourbon">Whiskey/Bourbon</option>
+        <option value="Tequila/Mezcal">Tequila/Mezcal</option>
+        <option value="Vodka">Vodka</option>
+        <option value="Rum">Rum</option>
+        <option value="Beer">Beer</option>
+        <option value="Wine">Wine</option>
+        <option value="Mixer">Mixer</option>
+        <option value="Misc">Misc.</option>    
+    </select><br>
+    Cost/Bottle:
+    <input id="btl_cost" type="text" name="btl_cost"><br>
+    Cost/Case:
+    <input id="cse_cost" type="text" name="cse_cost"><br>
+    <span id="error"></span>
+    Distributor:
+    <input id="distributor" type="text" name="distributor" required><br>
+    <input type="submit" value="Submit">    
+</form>
+</fieldset>
+<script src="{{this.events}}"></script>

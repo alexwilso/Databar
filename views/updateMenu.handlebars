@@ -1,0 +1,69 @@
+<!-- Nav Bar -->
+<div id="nav_bar">
+    <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/employees">EMPLOYEES</a></li>
+        <li><a href="/events">EVENTS</a></li>
+        <li><a href="/menu">MENU</a></li>
+        <li><a href="/inventory">INVENTORY</a></li>
+        <li><a href="/jobs">JOBS</a></li>
+    </ul>
+</div>
+<!-- Page Icon -->
+<div>
+<img class="page_icon" src="/images/drinks.jpg">
+</div>
+<h1>Edit Menu Item</h1>
+
+<!-- Inventory Form -->
+<fieldset>
+<form id="editDrinks" action="/menu" method="PUT">
+    Drink Name:
+    <input id="drink_name" type="text" name="drink_name" required><br>
+
+    Ingredient 1:
+    <!-- Loops through inventory object passed from index.js  -->
+    <select id="ingredient_1" name="ingredient_1">
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
+    Ingredient 2:
+    <!-- Loops through inventory object passed from index.js  -->
+    <select id="ingredient_2" name="ingredient_2">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
+    Ingredient 3:
+     <!-- Loops through inventory object passed from index.js  -->
+    <select id="ingredient_3" name="ingredient_3">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
+    Ingredient 4:
+     <!-- Loops through inventory object passed from index.js  -->
+    <select id="ingredient_4" name="ingredient_4">
+        <option value=""></option> <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
+    Ingredient 5:
+    <!-- Loops through inventory object passed from index.js  -->
+    <select id="ingredient_5" name="ingredient_5">
+        <option value=""></option>  <!-- NULL Option -->
+        {{#each inventory}}
+        <option value={{this.product_ID}}>{{this.name}}</option>
+        {{/each}}</select><br>
+
+    Price:
+    <input id="price" type="decimal" name="price" required><br>
+    <span id="error"></span>
+    <input type="submit" value="Submit">    
+</form>
+</fieldset>
+<script src="{{this.events}}"></script>

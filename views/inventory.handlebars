@@ -35,7 +35,7 @@
 <br> --}}
 
 <!-- Inventory Table -->
-<p>Browse existing inventory or update/delete an inventory..</p> 
+<p>Browse existing inventory or edit/delete an inventory..</p> 
 <table>
     <thead style="border: 1px solid black">
         <tr>
@@ -56,7 +56,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{isNullInventory this.cse_cost}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.distributor}}</div></td>
         <td><button onclick="deleteItem({{this.product_ID}})">Delete</button></td>
-        <td><button>Update</button></td>
+        <td><a href="updateInv">Edit</a></td>
     </tr>
     {{/each}}
     

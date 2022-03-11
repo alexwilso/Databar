@@ -26,7 +26,7 @@
 </form>
 <br> --}}
 
-<p>Browse existing jobs or update/delete an job..</p> 
+<p>Browse existing jobs or edit/delete an job..</p> 
 
 <!-- Menu Table -->
 <table>
@@ -43,7 +43,7 @@
             <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
             <td style="border: 1px solid black"><div contenteditable>{{this.hourly_rate}}</div></td>
             <td><button onclick="deleteItem({{this.job_code}})">Delete</button></td>
-            <td><button>Update</button></td>
+            <td><a href="updateJob">Edit</a></td>
             </tr>
         {{/each}}
     <tbody id="header">
