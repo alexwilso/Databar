@@ -3,9 +3,10 @@
     <ul>
         <li><a href="/">HOME</a></li>
         <li><a href="/events">EVENTS</a></li>
+        <li><a id="cur_tab" href="">EMPLOYEES</a></li>
         <li><a href="/menu">MENU</a></li>
         <li><a href="/inventory">INVENTORY</a></li>
-        <li><a href="/jobs">JOBS</a></li>
+        <li style="border-right: 2px solid;"><a href="/jobs">JOBS</a></li>
     </ul>
 </div>
 <!-- Page Icon -->
@@ -47,7 +48,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{this.first_name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.last_name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.telephone}}</div></td>
-        <td style="border: 1px solid black"><div contenteditable>{{this.start_date}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{formatDate this.start_date}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
          <td><button onclick="deleteItem({{this.employee_ID}})">Delete</button></td>
          <td><a href="/updateEmp">Edit</a> 
@@ -69,6 +70,7 @@
     <input id="last_name" type="text" name="last_name" required><br>
     Telephone:
     <input id="telephone" type="text" name="telephone" required><br>
+    <span id="error"></span>
     Start Date:
     <input type="date" name="start_date" id="start_date" required><br>
     Job:
@@ -80,4 +82,5 @@
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
+<script src="{{this.events}}"></script>
 

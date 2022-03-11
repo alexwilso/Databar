@@ -4,8 +4,9 @@
         <li><a href="/">HOME</a></li>
         <li><a href="/events">EVENTS</a></li>
         <li><a href="/employees">EMPLOYEES</a></li>
+        <li><a id="cur_tab" href="">MENU</a></li>
         <li><a href="/inventory">INVENTORY</a></li>
-        <li><a href="/jobs">JOBS</a></li>
+        <li style="border-right: 2px solid;"><a href="/jobs">JOBS</a></li>
     </ul>
 </div>    
 <!--Page Icon -->
@@ -117,7 +118,8 @@
 
     Price:
     <input id="price" type="decimal" name="price" required><br>
+    <span id="error"></span>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
-<br>
+<script src="{{this.events}}"></script>
