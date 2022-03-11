@@ -11,7 +11,6 @@ require('./database/import.js');
 
 // Set up body parser
 let bodyParser = require("body-parser");
-const { STRING, INT24 } = require("mysql/lib/protocol/constants/types");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -107,39 +106,30 @@ app.get("/employees", (req, res, next) => {
 });
 
 // updateEmp Page
-app.get("/updateEmp", (req, res, next) => {
-    let jobValues = 'SELECT * FROM Jobs';
+app.get("/updateEmp/:id", (req, res, next) => {
+    callbackCount = 0;
+	let jobValues = 'SELECT * FROM Jobs';
 	let context = {};
+	context.jsscripts = ["getEmp.js"]
 	context.events = "/scripts/errorCheck.js";
-    // Select Jobs query
+//    getEmp(res, mysql, context, req.params.id, complete);
+	// Select Jobs query
 	mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful employees select');
 			context["jobs"] = jobrows; // results of query
-			// console.log(context)
-			// Render to employee.handlebars
-			res.render("updateEmp", context);
-			};
-		});
+			function complete() {
+				callbackCount++;
+				if(callbackCount >= 1) {
+					res.render("updateEmp", context);
+				}
+			}// Render to employee.handlebars
+		};
+	});
 });
 	
-// Update Employee
-//app.post("/employees/update", (req, res) => {
-//	var sql = 'UPDATE Employees SET first_name= ?, last_name= ?, telephone= ? WHERE employee_id= req.body.employee_ID'
-//	var inserts = [req.body.first_name, req.body.last_name];
-//	mysql.pool.query(sql, inserts, function(error, results, fields) {
-//		if(error){
-//			res.write(JSON.stringify(error));
-//			res.end();
-//		} else {
-//			console.log('Employee Updated');
-//			res.redirect("/employees");
-//		} 
-//	});
-//});
-
 // Insert Employee
 app.post("/employees", (req, res) => {
 	var sql = 'INSERT INTO Employees (first_name, last_name, telephone, job_code, start_date) VALUES (?,?,?,?,?)';
