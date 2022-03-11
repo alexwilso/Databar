@@ -17,7 +17,7 @@
 
 <!-- Inventory Form -->
 <fieldset>
-<form id="drinks" action="/menu" method="POST">
+<form id="editDrinks" action="/menu" method="PUT">
     Drink Name:
     <input id="drink_name" type="text" name="drink_name" required><br>
 
@@ -62,6 +62,8 @@
 
     Price:
     <input id="price" type="decimal" name="price" required><br>
+    <span id="error"></span>
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
+<script src="{{this.events}}"></script>

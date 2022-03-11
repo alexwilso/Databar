@@ -16,7 +16,7 @@
     <h1>Edit Event</h1>
 
 <fieldset>
-<form id="employees" action="/events" method="POST">
+<form id="editEmployees" action="/events" method="PUT">
     Event Name:
     <input id="event_name" type="text" name="event_name" required><br>
     Event Date:
@@ -59,6 +59,7 @@
 
     Guest Count:
     <input id="guest_count" type="integer" name="guest_count" required><br>
+    <span id="error"></span>
 
     Drink Speial:
     <!-- Loops through drinks object passed from index.js  -->
@@ -69,3 +70,4 @@
     <input type="submit" value="Submit">    
 </form>
 </fieldset>
+<script src="{{this.events}}"></script>

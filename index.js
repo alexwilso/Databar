@@ -108,25 +108,37 @@ app.get("/employees", (req, res, next) => {
 
 // updateEmp Page
 app.get("/updateEmp", (req, res, next) => {
-    let context = {};
-    res.render("updateEmp", context);
-  });
-
-// Update Employee
-app.post("/employees/update", (req, res) => {
-	var sql = 'UPDATE Employees SET first_name= ?, last_name= ?, telephone= ? WHERE employee_id= req.body.employee_ID'
-	var inserts = [req.body.first_name, req.body.last_name];
-	mysql.pool.query(sql, inserts, function(error, results, fields) {
-		if(error){
-			res.write(JSON.stringify(error));
-			res.end();
+    let jobValues = 'SELECT * FROM Jobs';
+	let context = {};
+	context.events = "/scripts/errorCheck.js";
+    // Select Jobs query
+	mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
+		if (err) {
+			console.log(err);
 		} else {
-			console.log('Employee Updated');
-			res.redirect("/employees");
-		} 
-	});
+			console.log('Successful employees select');
+			context["jobs"] = jobrows; // results of query
+			// console.log(context)
+			// Render to employee.handlebars
+			res.render("updateEmp", context);
+			};
+		});
 });
-
+	
+// Update Employee
+//app.post("/employees/update", (req, res) => {
+//	var sql = 'UPDATE Employees SET first_name= ?, last_name= ?, telephone= ? WHERE employee_id= req.body.employee_ID'
+//	var inserts = [req.body.first_name, req.body.last_name];
+//	mysql.pool.query(sql, inserts, function(error, results, fields) {
+//		if(error){
+//			res.write(JSON.stringify(error));
+//			res.end();
+//		} else {
+//			console.log('Employee Updated');
+//			res.redirect("/employees");
+//		} 
+//	});
+//});
 
 // Insert Employee
 app.post("/employees", (req, res) => {
@@ -184,11 +196,32 @@ app.get("/events", (req, res, next) => {
 	
 // Update Events Page
 app.get("/updateEvent", (req, res, next) => {
-    let context = {};
-    res.render("updateEvent", context);
-  });
+    let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
+	let selectDrinks = 'SELECT * FROM Drinks';
+	let context = {};
+	context.events = "/scripts/errorCheck.js";
+    // Select Employees
+	mysql.pool.query(selctEmployees, (err, empRows) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('successful employees query')
+			context['employees'] = empRows; // results of query
+		// Select Drink
+		mysql.pool.query(selectDrinks, (err, drinkrows) => {
+			if (err) {
+				console.log(err);
+			} else {
+			console.log('successful drink query');
+			context['drinks'] = drinkrows;
+			res.render("updateEvent", context);
+				};
+			});
+		  };
+		});
+	});
 
-	//Insert Event
+//Insert Event
 app.post("/events", (req, res) => {
 	var sql = 'INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)';
 	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item];
@@ -208,6 +241,7 @@ app.post("/events", (req, res) => {
 	});
 });
 
+
 // Jobs Page
 app.get("/jobs", (req, res, next) => {
 	let selectJobs = 'SELECT * FROM Jobs';
@@ -224,7 +258,14 @@ app.get("/jobs", (req, res, next) => {
 			res.render("jobs", context); // Renders handlebar file and context Obj
 		};
 	});
-	});
+});
+
+// Update Job Page
+app.get("/updateJob", (req, res, next) => {
+    let context = {};
+	context.events = "/scripts/errorCheck.js";
+    res.render("updateJob", context);
+  });
 
 // Insert Job
 app.post("/jobs", (req, res) => {
@@ -240,6 +281,7 @@ app.post("/jobs", (req, res) => {
 		}
 	});
 });
+
 
 // Menu Page
 app.get("/menu", (req, res, next) => {
@@ -271,8 +313,19 @@ app.get("/menu", (req, res, next) => {
 
 // Update Menu Page
 app.get("/updateMenu", (req, res, next) => {
-    let context = {};
-    res.render("updateMenu", context);
+    let selectinventory = 'Select Inventory.product_ID, Inventory.name FROM Inventory';
+	let context = {};
+    context.events = "/scripts/errorCheck.js";
+	// Select Inventory
+	mysql.pool.query(selectinventory, (err, inventoryRows) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('successful inventory query');
+			context['inventory'] = inventoryRows; // results of query
+			res.render("updateMenu", context); // Renders handlebar file and context Obj
+		};
+	});
   });
 
 // Insert Menu Item
@@ -317,7 +370,8 @@ app.get("/inventory", (req, res, next) => {
 // Update Inventory Item
 app.get("/updateInv", (req, res, next) => {
     let context = {};
-    res.render("updateInv", context);
+    context.events = "/scripts/errorCheck.js";
+	res.render("updateInv", context);
   });
 
 	// Insert Item
