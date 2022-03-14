@@ -58,7 +58,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.ingredient_5}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.price}}</div></td>
          <td><button onclick="deleteItem({{this.menu_item}})">Delete</button></td>
-         <td><a href="/updateMenu">Edit</a></td>
+         <td><a href="/updateMenu/{{this.menu_item}}">Edit</a></td>
     </tr>
     {{/each}}
     

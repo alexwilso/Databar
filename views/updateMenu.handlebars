@@ -16,11 +16,12 @@
 <h1>Edit Menu Item</h1>
 
 <!-- Inventory Form -->
+{{#each results}}
 <fieldset>
 <form id="editDrinks" action="/menu" method="PUT">
     Drink Name:
-    <input id="drink_name" type="text" name="drink_name" required><br>
-
+    <input id="drink_name" type="text" name="drink_name" value="{{this.drink_name}}" required><br>
+{{/each}}
     Ingredient 1:
     <!-- Loops through inventory object passed from index.js  -->
     <select id="ingredient_1" name="ingredient_1">
@@ -59,11 +60,12 @@
         {{#each inventory}}
         <option value={{this.product_ID}}>{{this.name}}</option>
         {{/each}}</select><br>
-
+{{#each results}}
     Price:
-    <input id="price" type="decimal" name="price" required><br>
+    <input id="price" type="decimal" name="price" value="{{this.price}}" required><br>
     <span id="error"></span>
     <input type="submit" value="Submit">    
+{{/each}}
 </form>
 </fieldset>
 <script src="{{this.events}}"></script>

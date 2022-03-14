@@ -16,11 +16,13 @@
     <h1>Edit Event</h1>
 
 <fieldset>
+{{#each results}}
 <form id="editEmployees" action="/events" method="PUT">
     Event Name:
-    <input id="event_name" type="text" name="event_name" required><br>
+    <input id="event_name" type="text" name="event_name" value="{{this.event_name}}" required><br>
     Event Date:
-    <input type="date" name="event_date" id="event_date" required><br>
+    <input type="text" name="event_date" id="event_date" value="{{formatDate this.event_date}}" required><br>
+    {{/each}}
     <!-- Loops through Employees object passed from index.js  -->
     Employee:
         <select id="employee_1" name="employee_1">
@@ -56,12 +58,12 @@
         {{#each employees}}
         <option value={{this.employee_ID}}>{{this.first_name}} {{this.last_name}}</option>
         {{/each}}</select><br>
-
+    {{#each results}}
     Guest Count:
-    <input id="guest_count" type="integer" name="guest_count" required><br>
+    <input id="guest_count" type="integer" name="guest_count" value="{{this.guest_count}}" required><br>
     <span id="error"></span>
-
-    Drink Speial:
+    {{/each}}
+    Drink Special:
     <!-- Loops through drinks object passed from index.js  -->
     <select id="menu_item" name="menu_item">
         {{#each drinks}}

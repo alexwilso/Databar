@@ -15,13 +15,15 @@
     </div>
     <h1>Edit Jobs</h1>
 <fieldset>
+{{#each results}}
 <form id="editJob" action="/jobs" method="PUT">
     Job Title:
-    <input id="job_title" type="text" name="job_title" required><br>
+    <input id="job_title" type="text" name="job_title" value="{{this.job_title}}" required><br>
     Hourly Rate:
-    <input id="hourly_rate" type="decimal" name="hourly_rate" required><br>
+    <input id="hourly_rate" type="decimal" name="hourly_rate" value="{{this.hourly_rate}}" required><br>
     <span id="error"></span>
     <input type="submit" value="Submit">    
+{{/each}}
 </form>
 </fieldset>
 <script src="{{this.events}}"></script>

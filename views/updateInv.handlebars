@@ -10,16 +10,17 @@
     </ul>
 </div>
 <!-- Page Icon -->    
-    <div>
-       <img class="page_icon" src="/images/inventory.jpg">
-    </div>
-       <h1>Edit Item</h1>
-    <fieldset>
+<div>
+    <img class="page_icon" src="/images/inventory.jpg">
+</div>
+    <h1>Edit Item</h1>
+<fieldset>
+{{#each results}}
 <form id="editInventory" action="/inventory" method="PUT">
     Name:
-    <input id="name" type="text" name="name" required><br>
+    <input id="name" type="text" name="name" value="{{this.name}}" required><br>
     Category:
-    <select name="category" id="category">
+    <select name="category" id="category" value="{{this.category}}">
         <option value="Whiskey/Bourbon">Whiskey/Bourbon</option>
         <option value="Tequila/Mezcal">Tequila/Mezcal</option>
         <option value="Vodka">Vodka</option>
@@ -30,13 +31,14 @@
         <option value="Misc">Misc.</option>    
     </select><br>
     Cost/Bottle:
-    <input id="btl_cost" type="text" name="btl_cost"><br>
+    <input id="btl_cost" type="text" name="btl_cost" value="{{this.btl_cost}}"><br>
     Cost/Case:
-    <input id="cse_cost" type="text" name="cse_cost"><br>
+    <input id="cse_cost" type="text" name="cse_cost" value="{{this.cse_cost}}"><br>
     <span id="error"></span>
     Distributor:
-    <input id="distributor" type="text" name="distributor" required><br>
+    <input id="distributor" type="text" name="distributor" value="{{this.distributor}}" required><br>
     <input type="submit" value="Submit">    
 </form>
+{{/each}}
 </fieldset>
 <script src="{{this.events}}"></script>
