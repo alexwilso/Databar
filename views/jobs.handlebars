@@ -43,7 +43,7 @@
             <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
             <td style="border: 1px solid black"><div contenteditable>{{this.hourly_rate}}</div></td>
             <td><button onclick="deleteItem({{this.job_code}})">Delete</button></td>
-            <td><a href="updateJob">Edit</a></td>
+            <td><a href="updateJob/{{this.job_code}}">Edit</a></td>
             </tr>
         {{/each}}
     <tbody id="header">

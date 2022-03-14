@@ -15,19 +15,21 @@
 <h1>Edit Employee</h1>
 </div>
 <fieldset>
-<form id="editEmployees" action="/employees/update" method="PUT">
+{{#each results}}
+<form id="editEmployees" action="/employees/{{this.employee_ID}}" method="PUT">
     First Name:
-    <input id="first_name" type="text" name="first_name" value="{{employee.first_name}}" required><br>
+    <input id="first_name" type="text" name="first_name" value="{{this.first_name}}" required><br>
     Last Name:
-    <input id="last_name" type="text" name="last_name" value="{{employee.last_name}}" required><br>
+    <input id="last_name" type="text" name="last_name" value="{{this.last_name}}" required><br>
     Telephone:
-    <input id="telephone" type="text" name="telephone" value="{{employee.telephone}}" required><br>
+    <input id="telephone" type="text" name="telephone" value="{{this.telephone}}" required><br>
     <span id="error"></span>
     Start Date:
-    <input type="date" name="start_date" id="start_date" value="{{employee.start_date}}" required><br>
+    <input type="text" name="start_date" id="start_date" value="{{formatDate this.start_date}}" required><br>
     Job:
     <!-- Loops through jobs object passed from index.js  -->
-    <select id="job_code" name="job_code" value="{{employee.job_code}}" required>
+    <select id="job_code" name="job_code" value="{{this.job_code}}" required>
+        {{/each}}
         {{#each jobs}}
         <option value={{this.job_code}}>{{this.job_title}}</option>
         {{/each}}</select><br>

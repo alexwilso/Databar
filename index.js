@@ -105,28 +105,50 @@ app.get("/employees", (req, res, next) => {
 	});
 });
 
-// updateEmp Page
+// Update Employee Page
 app.get("/updateEmp/:id", (req, res, next) => {
-    callbackCount = 0;
+	let selectEmployees = 'SELECT * FROM Employees WHERE employee_ID = (?)';
 	let jobValues = 'SELECT * FROM Jobs';
+	let insert = [req.params.id];
 	let context = {};
-	context.jsscripts = ["getEmp.js"]
 	context.events = "/scripts/errorCheck.js";
-//    getEmp(res, mysql, context, req.params.id, complete);
-	// Select Jobs query
-	mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
+	// Select employees query
+	mysql.pool.query(selectEmployees, insert, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Successful employees select');
-			context["jobs"] = jobrows; // results of query
-			function complete() {
-				callbackCount++;
-				if(callbackCount >= 1) {
-					res.render("updateEmp", context);
-				}
-			}// Render to employee.handlebars
+			context["results"] = rows; // results of query
+			console.log(context);
+			// Select Jobs query
+			mysql.pool.query(jobValues, (err, jobrows, jobsfields) => {
+				if (err) {
+					console.log(err);
+				} else {
+				console.log('Successful jobs select');
+				context["jobs"] = jobrows; // results of query
+				
+				// Render to employee.handlebars
+				res.render("updateEmp", context);
+				};
+			});
 		};
+	});
+});
+
+// Update Employee Function
+app.put("employees/:id", (req, res, next) => {
+	var mysql = req.app.get('mysql');
+	var sql = 'UPDATE Employees SET first_name=?, last_name=?, telephone=?, job_code=?, start_date=? WHERE employee_ID=?';
+	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date, req.params.id];
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Employee Updated');
+			res.redirect("/employees");
+		}
 	});
 });
 	
@@ -185,13 +207,22 @@ app.get("/events", (req, res, next) => {
 	});
 	
 // Update Events Page
-app.get("/updateEvent", (req, res, next) => {
-    let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
+app.get("/updateEvent/:id", (req, res, next) => {
+    let selectEvents = 'SELECT Events.event_ID, Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item WHERE event_ID = (?)';
+	let selectEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
 	let selectDrinks = 'SELECT * FROM Drinks';
+	let insert = [req.params.id];
 	let context = {};
 	context.events = "/scripts/errorCheck.js";
-    // Select Employees
-	mysql.pool.query(selctEmployees, (err, empRows) => {
+    // Select Events
+	mysql.pool.query(selectEvents, insert, (err, rows, fields) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('Successful events select');
+			context['results'] = rows; // results of query
+	// Select Employees
+	mysql.pool.query(selectEmployees, (err, empRows) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -209,7 +240,9 @@ app.get("/updateEvent", (req, res, next) => {
 			});
 		  };
 		});
-	});
+	  };
+   });
+});
 
 //Insert Event
 app.post("/events", (req, res) => {
@@ -251,11 +284,21 @@ app.get("/jobs", (req, res, next) => {
 });
 
 // Update Job Page
-app.get("/updateJob", (req, res, next) => {
-    let context = {};
+app.get("/updateJob/:id", (req, res, next) => {
+    let selectJob = 'Select * FROM Jobs WHERE job_code=(?)';
+	let insert = [req.params.id];
+	let context = {};
 	context.events = "/scripts/errorCheck.js";
-    res.render("updateJob", context);
-  });
+    mysql.pool.query(selectJob, insert, (err, rows, fields) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('Successful Job select');
+			context['results'] = rows; // results of query
+			res.render("updateJob", context);
+  		};
+	});
+});
 
 // Insert Job
 app.post("/jobs", (req, res) => {
@@ -302,21 +345,32 @@ app.get("/menu", (req, res, next) => {
 });
 
 // Update Menu Page
-app.get("/updateMenu", (req, res, next) => {
-    let selectinventory = 'Select Inventory.product_ID, Inventory.name FROM Inventory';
+app.get("/updateMenu/:id", (req, res, next) => {
+    let selectMenu = 'SELECT * FROM Drinks WHERE menu_item=(?)';
+	let selectinventory = 'Select Inventory.product_ID, Inventory.name FROM Inventory';
+	let insert = [req.params.id];
 	let context = {};
     context.events = "/scripts/errorCheck.js";
-	// Select Inventory
-	mysql.pool.query(selectinventory, (err, inventoryRows) => {
+	// Select Menu Item
+	mysql.pool.query(selectMenu, insert, (err, rows, fields) => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('successful inventory query');
-			context['inventory'] = inventoryRows; // results of query
-			res.render("updateMenu", context); // Renders handlebar file and context Obj
-		};
+			console.log('Successful Drink select');
+			context['results'] = rows; // Restults of query
+		// Select Inventory
+		mysql.pool.query(selectinventory, (err, inventoryRows) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('successful inventory query');
+				context['inventory'] = inventoryRows; // results of query
+				res.render("updateMenu", context); // Renders handlebar file and context Obj
+				};
+			});
+  		};
 	});
-  });
+});
 
 // Insert Menu Item
 app.post("/menu", (req, res) => {
@@ -358,11 +412,21 @@ app.get("/inventory", (req, res, next) => {
 	});
 
 // Update Inventory Item
-app.get("/updateInv", (req, res, next) => {
-    let context = {};
+app.get("/updateInv/:id", (req, res, next) => {
+    let selectInventory = 'SELECT * FROM Inventory WHERE product_ID=(?)';
+	let insert = [req.params.id];
+	let context = {};
     context.events = "/scripts/errorCheck.js";
-	res.render("updateInv", context);
-  });
+	mysql.pool.query(selectInventory, insert, (err, rows, fields) => {
+		if (err) {
+			console.log(err);
+		} else {
+			context['results'] = rows; // results of query
+			console.log('Successful inventory select');
+			res.render("updateInv", context);
+			};
+		});
+	});
 
 	// Insert Item
 app.post("/inventory", (req, res) => {
