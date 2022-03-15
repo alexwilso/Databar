@@ -16,7 +16,7 @@
 </div>
 <fieldset>
 {{#each results}}
-<form id="editEmployees" action="/employees/{{this.employee_ID}}" method="PUT">
+<form id="editEmployees" action="/employees/{{this.employee_ID}}" method="POST">
     First Name:
     <input id="first_name" type="text" name="first_name" value="{{this.first_name}}" required><br>
     Last Name:
@@ -25,7 +25,7 @@
     <input id="telephone" type="text" name="telephone" value="{{this.telephone}}" required><br>
     <span id="error"></span>
     Start Date:
-    <input type="text" name="start_date" id="start_date" value="{{formatDate this.start_date}}" required><br>
+    <input type="text" name="start_date" id="start_date" value="{{this.start_date}}" required><br>
     Job:
     <!-- Loops through jobs object passed from index.js  -->
     <select id="job_code" name="job_code" value="{{this.job_code}}" required>

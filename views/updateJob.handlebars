@@ -16,7 +16,7 @@
     <h1>Edit Jobs</h1>
 <fieldset>
 {{#each results}}
-<form id="editJob" action="/jobs" method="PUT">
+<form id="editJob" action="/jobs/{{this.job_code}}" method="POST">
     Job Title:
     <input id="job_title" type="text" name="job_title" value="{{this.job_title}}" required><br>
     Hourly Rate:
