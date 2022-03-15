@@ -18,7 +18,7 @@
 <!-- Inventory Form -->
 {{#each results}}
 <fieldset>
-<form id="editDrinks" action="/menu" method="PUT">
+<form id="editDrinks" action="/menu/{{this.menu_item}}" method="POST">
     Drink Name:
     <input id="drink_name" type="text" name="drink_name" value="{{this.drink_name}}" required><br>
 {{/each}}

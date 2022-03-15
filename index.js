@@ -127,18 +127,16 @@ app.get("/updateEmp/:id", (req, res, next) => {
 				} else {
 				console.log('Successful jobs select');
 				context["jobs"] = jobrows; // results of query
-				
 				// Render to employee.handlebars
 				res.render("updateEmp", context);
-				};
-			});
-		};
+					};
+				});
+			};
+		});
 	});
-});
 
-// Update Employee Function
-app.put("employees/:id", (req, res, next) => {
-	var mysql = req.app.get('mysql');
+// Update Employee Query
+app.post("/employees/:id", (req, res, next) => {
 	var sql = 'UPDATE Employees SET first_name=?, last_name=?, telephone=?, job_code=?, start_date=? WHERE employee_ID=?';
 	var inserts = [req.body.first_name, req.body.last_name, req.body.telephone, req.body.job_code, req.body.start_date, req.params.id];
 	mysql.pool.query(sql, inserts, function(error, results, fields) {
@@ -244,6 +242,21 @@ app.get("/updateEvent/:id", (req, res, next) => {
    });
 });
 
+// Update Events Query
+app.post("/events/:id", (req, res, next) => {
+	var sql = 'UPDATE Events SET event_name=?, event_date=?, employee_1=?, employee_2=?, employee_3=?, employee_4=?, employee_5=?, guest_count=?, menu_item=? WHERE event_ID=?';
+	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item, req.params.id];
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Event Updated');
+			res.redirect("/events");
+		}
+	});
+});
+
 //Insert Event
 app.post("/events", (req, res) => {
 	var sql = 'INSERT INTO Events (event_name, event_date, employee_1, employee_2, employee_3, employee_4, employee_5, guest_count, menu_item) VALUES (?,?,?,?,?,?,?,?,?)';
@@ -297,6 +310,21 @@ app.get("/updateJob/:id", (req, res, next) => {
 			context['results'] = rows; // results of query
 			res.render("updateJob", context);
   		};
+	});
+});
+
+// Update Job Query
+app.post("/jobs/:id", (req, res, next) => {
+	var sql = 'UPDATE Jobs SET job_title=?, hourly_rate=? WHERE job_code=?';
+	var inserts = [req.body.job_title, req.body.hourly_rate, req.params.id];
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Job Updated');
+			res.redirect("/jobs");
+		}
 	});
 });
 
@@ -372,6 +400,21 @@ app.get("/updateMenu/:id", (req, res, next) => {
 	});
 });
 
+// Update Drinks Query
+app.post("/menu/:id", (req, res, next) => {
+	var sql = 'UPDATE Drinks SET drink_name=?, ingredient_1=?, ingredient_2=?, ingredient_3=?, ingredient_4=?, ingredient_5=?, price=? WHERE menu_item=?';
+	var inserts = [req.body.drink_name, req.body.ingredient_1, req.body.ingredient_2, req.body.ingredient_3, req.body.ingredient_4, req.body.ingredient_5, req.body.price, req.params.id];
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Menu Updated');
+			res.redirect("/menu");
+		}
+	});
+});
+
 // Insert Menu Item
 app.post("/menu", (req, res) => {
 	// var mysql = req.app.get('mysql');
@@ -428,7 +471,22 @@ app.get("/updateInv/:id", (req, res, next) => {
 		});
 	});
 
-	// Insert Item
+// Update Inventory Item Query
+app.post("/inventory/:id", (req, res, next) => {
+	var sql = 'UPDATE Inventory SET name=?, category=?, btl_cost=?, cse_cost=?, distributor=? WHERE product_ID=?';
+	var inserts = [req.body.name, req.body.category, req.body.btl_cost, req.body.cse_cost, req.body.distributor, req.params.id];
+	mysql.pool.query(sql, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		} else {
+			console.log('Item Updated');
+			res.redirect("/inventory");
+		}
+	});
+});
+
+// Insert Item
 app.post("/inventory", (req, res) => {
 	var sql = 'INSERT INTO Inventory (name, category, btl_cost, cse_cost, distributor) VALUES (?,?,?,?,?)';
 	var inserts = [req.body.name, req.body.category, req.body.btl_cost, req.body.cse_cost, req.body.distributor];
