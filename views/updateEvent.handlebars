@@ -21,7 +21,7 @@
     Event Name:
     <input id="event_name" type="text" name="event_name" value="{{this.event_name}}" required><br>
     Event Date:
-    <input type="text" name="event_date" id="event_date" value="{{formatDate this.event_date}}" required><br>
+    <input type="date" name="event_date" id="event_date" value="{{stringDate this.event_date}}" required><br>
     {{/each}}
     <!-- Loops through Employees object passed from index.js  -->
     Employee:
