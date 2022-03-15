@@ -49,7 +49,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{this.last_name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.telephone}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{formatDate this.start_date}}</div></td>
-        <td style="border: 1px solid black"><div contenteditable>{{this.job_title}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{isNull this.job_title}}</div></td>
          <td><button onclick="deleteItem({{this.employee_ID}})">Delete</button></td>
          <td><a href="/updateEmp/{{this.employee_ID}}">Edit</a> 
     </tr>

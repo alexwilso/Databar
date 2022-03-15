@@ -39,12 +39,12 @@ CREATE TABLE `Employees` (
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`telephone` varchar (255) NOT NULL,
-	`job_code` int NOT NULL,
+	`job_code` int,
 	`start_date` DATE NOT NULL,
 	PRIMARY KEY (`employee_ID`),
 	FOREIGN KEY (`job_code`) REFERENCES `Jobs` (`job_code`)
 	ON UPDATE CASCADE
-	ON DELETE CASCADE
+	ON DELETE SET NULL
 );
 
 
@@ -126,19 +126,19 @@ CREATE TABLE `Drinks` (
 	FOREIGN KEY (`ingredient_2`)
 	REFERENCES `Inventory` (`product_ID`)
 		ON UPDATE CASCADE
-		ON DELETE SET NULL,
+		ON DELETE CASCADE,
 	FOREIGN KEY (`ingredient_3`)
 	REFERENCES `Inventory` (`product_ID`)
 		ON UPDATE CASCADE
-		ON DELETE SET NULL,
+		ON DELETE CASCADE,
 	FOREIGN KEY (`ingredient_4`)
 	REFERENCES `Inventory` (`product_ID`)
 		ON UPDATE CASCADE
-		ON DELETE SET NULL,
+		ON DELETE CASCADE,
 	FOREIGN KEY (`ingredient_5`)
 	REFERENCES `Inventory` (`product_ID`)	
 		ON UPDATE CASCADE
-		ON DELETE SET NULL);
+		ON DELETE CASCADE);
 
 
 --
@@ -170,7 +170,7 @@ CREATE TABLE `Events` (
 	`employee_4` int DEFAULT NULL,
 	`employee_5` int DEFAULT NULL,
 	`guest_count` int NOT NULL,
-	`menu_item` int NOT NULL,
+	`menu_item` int DEFAULT NULL,
 	PRIMARY KEY (`event_ID`),
 	FOREIGN KEY (`employee_1`) 
 	REFERENCES `Employees` (`employee_ID`)
@@ -195,7 +195,7 @@ CREATE TABLE `Events` (
 	FOREIGN KEY (`menu_item`) 
 	REFERENCES `Drinks` (`menu_item`)
 		ON UPDATE CASCADE	
-		ON DELETE CASCADE
+		ON DELETE SET NULL
 );
 
 -- SAMPLE DATA --

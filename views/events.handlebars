@@ -55,7 +55,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_4}}</div></td> <!-- Employee 4 -->
         <td style="border: 1px solid black"><div contenteditable>{{isNull this.employee_5}}</div></td> <!-- Employee 5--> 
         <td style="border: 1px solid black"><div contenteditable>{{this.guest_count}}</div></td> <!-- Guest Count -->
-        <td style="border: 1px solid black"><div contenteditable>{{this.drink_special}}</div></td> <!-- Drink Special -->
+        <td style="border: 1px solid black"><div contenteditable>{{isNull this.drink_special}}</div></td> <!-- Drink Special -->
         <td><button onclick="deleteItem({{this.event_ID}})">Delete</button></td>
         <td><a href="/updateEvent/{{this.event_ID}}">Edit</a></td>
         </tr>
