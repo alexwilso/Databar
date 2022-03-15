@@ -19,6 +19,11 @@ let obj = { // Helper functions for handlebars file
     formatDate: function(date){
         var format = { year: 'numeric', month: 'long', day: 'numeric' };
         return date.toLocaleDateString("en-US", format);
+    },
+
+    // Returns formatted date for updates
+    stringDate: function(date){
+        return date.toISOString().split('T')[0];
     }
 };
 module.exports = { obj };
