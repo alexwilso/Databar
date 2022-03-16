@@ -16,7 +16,7 @@
     <h1>Edit Item</h1>
 <fieldset>
 {{#each results}}
-<form id="editInventory" action="/inventory/{{this.product_id}}" method="POST">
+<form id="editInventory" action="/inventory/{{this.product_ID}}" method="POST">
     Name:
     <input id="name" type="text" name="name" value="{{this.name}}" required><br>
     Category:

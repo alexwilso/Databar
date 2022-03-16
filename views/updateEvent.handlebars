@@ -17,7 +17,7 @@
 
 <fieldset>
 {{#each results}}
-<form id="editEmployees" action="/events/{{this.event_id}}" method="POST">
+<form id="editEvents" action="/events/{{this.event_ID}}" method="POST">
     Event Name:
     <input id="event_name" type="text" name="event_name" value="{{this.event_name}}" required><br>
     Event Date:

@@ -170,7 +170,7 @@ app.post("/employees", (req, res) => {
 app.get("/events", (req, res, next) => {
 	let selectEvents = 'SELECT Events.event_ID, Events.event_name, Events.event_date, Events.employee_1, Events.employee_2, Events.employee_3, Events.employee_4, Events.employee_5, Events.guest_count, Drinks.drink_name AS drink_special FROM Events LEFT JOIN Drinks ON Events.menu_item = Drinks.menu_item';
 	let selectDrinks = 'SELECT * FROM Drinks';
-	let selctEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
+	let selectEmployees = 'Select Employees.employee_ID, Employees.first_name, Employees.last_name FROM Employees';
 	let context = {}
 	context.jsscripts = ["delete.js"];
 	context.events = "/scripts/errorCheck.js";
@@ -189,7 +189,7 @@ app.get("/events", (req, res, next) => {
 				console.log('successful drink query');
 				context['drinks'] = drinkrows;
 				// Select Employees
-				mysql.pool.query(selctEmployees, (err, empRows) => {
+				mysql.pool.query(selectEmployees, (err, empRows) => {
 					if (err) {
 						console.log(err);
 					} else {
@@ -454,7 +454,7 @@ app.get("/inventory", (req, res, next) => {
 	});
 	});
 
-// Update Inventory Item
+// Update Inventory Item Page
 app.get("/updateInv/:id", (req, res, next) => {
     let selectInventory = 'SELECT * FROM Inventory WHERE product_ID=(?)';
 	let insert = [req.params.id];
