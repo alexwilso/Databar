@@ -3,9 +3,9 @@
 // Refrenced: mysql-import documentation
 
 const host = 'classmysql.engr.oregonstate.edu';
-const user = 'cs340_wilsoal9';
-const password = '0662';
-const database = 'cs340_wilsoal9';
+const user = 'cs340_ruarke';
+const password = '1188';
+const database = 'cs340_ruarke';
 
 const Importer = require('mysql-import');
 const importer = new Importer({host, user, password, database});

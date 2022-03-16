@@ -472,7 +472,7 @@ app.get("/updateInv/:id", (req, res, next) => {
 	});
 
 // Update Inventory Item Query
-app.post("/updateInv/:id", (req, res, next) => {
+app.post("/inventory/:id", (req, res, next) => {
 	var sql = 'UPDATE Inventory SET name=?, category=?, btl_cost=?, cse_cost=?, distributor=? WHERE product_ID=?';
 	var inserts = [req.body.name, req.body.category, req.body.btl_cost, req.body.cse_cost, req.body.distributor, req.params.id];
 	mysql.pool.query(sql, inserts, function(error, results, fields) {
