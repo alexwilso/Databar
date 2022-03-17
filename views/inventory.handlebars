@@ -52,7 +52,7 @@
         <td style="border: 1px solid black"><div contenteditable>{{this.product_ID}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.name}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.category}}</div></td>
-        <td style="border: 1px solid black"><div contenteditable>${{this.btl_cost}}</div></td>
+        <td style="border: 1px solid black"><div contenteditable>{{isNullInventory this.btl_cost}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{isNullInventory this.cse_cost}}</div></td>
         <td style="border: 1px solid black"><div contenteditable>{{this.distributor}}</div></td>
         <td><button onclick="deleteItem({{this.product_ID}})">Delete</button></td>

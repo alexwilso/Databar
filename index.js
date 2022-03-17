@@ -246,6 +246,11 @@ app.get("/updateEvent/:id", (req, res, next) => {
 app.post("/events/:id", (req, res, next) => {
 	var sql = 'UPDATE Events SET event_name=?, event_date=?, employee_1=?, employee_2=?, employee_3=?, employee_4=?, employee_5=?, guest_count=?, menu_item=? WHERE event_ID=?';
 	var inserts = [req.body.event_name, req.body.event_date, req.body.employee_1, req.body.employee_2, req.body.employee_3, req.body.employee_4, req.body.employee_5, req.body.guest_count, req.body.menu_item, req.params.id];
+	for (let index = 2; index < 7; index++) { // Null Check
+		if (inserts[index] == "") {
+			inserts[index] = null;
+		};
+	};
 	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error) {
 			res.write(JSON.stringify(error));
@@ -475,6 +480,11 @@ app.get("/updateInv/:id", (req, res, next) => {
 app.post("/inventory/:id", (req, res, next) => {
 	var sql = 'UPDATE Inventory SET name=?, category=?, btl_cost=?, cse_cost=?, distributor=? WHERE product_ID=?';
 	var inserts = [req.body.name, req.body.category, req.body.btl_cost, req.body.cse_cost, req.body.distributor, req.params.id];
+	for (let index = 2; index < 4; index++) { // Null Check
+		if (inserts[index] == "") {
+			inserts[index] = null;
+		};
+	};
 	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error) {
 			res.write(JSON.stringify(error));
