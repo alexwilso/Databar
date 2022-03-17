@@ -24,6 +24,15 @@ let obj = { // Helper functions for handlebars file
     // Returns formatted date for updates
     stringDate: function(date){
         return date.toISOString().split('T')[0];
+    },
+
+    eventEmployee: function(val, obj){
+        console.log(obj);
+        if (val == undefined) {
+            return "";
+        } else {
+            return `${obj[val - 1]['first_name:']} ${obj[val - 1]['last_name']}`
+        }
     }
 };
 module.exports = { obj };
