@@ -409,6 +409,12 @@ app.get("/updateMenu/:id", (req, res, next) => {
 app.post("/menu/:id", (req, res, next) => {
 	var sql = 'UPDATE Drinks SET drink_name=?, ingredient_1=?, ingredient_2=?, ingredient_3=?, ingredient_4=?, ingredient_5=?, price=? WHERE menu_item=?';
 	var inserts = [req.body.drink_name, req.body.ingredient_1, req.body.ingredient_2, req.body.ingredient_3, req.body.ingredient_4, req.body.ingredient_5, req.body.price, req.params.id];
+	for (let index = 2; index < 7; index++) { // Null Check
+		if (inserts[index] == "") {
+			inserts[index] = null;
+		};
+	};
+	mysql
 	mysql.pool.query(sql, inserts, function(error, results, fields) {
 		if(error) {
 			res.write(JSON.stringify(error));
